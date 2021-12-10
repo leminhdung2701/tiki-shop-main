@@ -1,0 +1,95 @@
+{% load static %}
+
+<!-- navbar-->
+<header class="header" style="background-color: #1a94ff;">
+  <div class="container px-0 px-lg-0">
+    
+    <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0">
+      <span class="font-weight-bold text-white" style="font-size: 30px; margin-right: 20px;">Tiki</span></a>
+      <a
+        class="navbar-brand"
+        href="{% url 'store:home' %}">
+        <form class="form-inline my-2 my-lg-0" >
+          <input class="form-control mr-sm-2" action="" style="width: 410px;font-size: 13.5px" method="GET" type="search"
+            placeholder="Search ..." aria-label="Search" name="q">
+          <button class="btn" style="color: white;border-color: white;font-size: 13.5px ; " type="submit"><i class="fa fa-search" ></i>  Search</button>
+        </form>
+        <!-- <span class="font-weight-bold text-white">Tiki</span></a> -->
+      <button class="navbar-toggler navbar-toggler-right" type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <!-- Link--><a class="nav-link active text-white"href="{% url 'store:home' %}">   Trang chủ</a>
+          </li>
+          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle
+              text-white" id="pagesDropdown" href="#"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">      Danh mục</a>
+            <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown">
+              {% if categories_menu %}
+              {% for cat_menu in categories_menu %}
+              <a class="dropdown-item border-0 transition-link"
+                href="{% url 'store:category-products' cat_menu.slug %}">{{cat_menu.title}}</a>
+              {% endfor %}
+              {% endif %}
+              <hr>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:all-categories' %}">All
+                Categories</a>
+
+            </li>
+            <li class="nav-item">
+              <!-- Link<a class="nav-link text-white" href="{% url 'store:home' %}">Bài viết</a> -->
+            </li>
+            <li class="nav-item">
+              <!-- Link<a class="nav-link text-white" href="{% url 'store:home' %}">Liên hệ</a> -->
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item" ><a class="nav-link my text-white" style="font-size: 12px;" href="{% url 'store:cart' %}"> <i
+                  class="fas fa-dolly-flatbed mr-1 text-white"></i>Giỏ hàng<small
+                  class="text-white">({{cart_items.count}})</small></a></li>
+
+            <li class="nav-item">
+              <a class="nav-link my text-white" style="font-size: 12px;" href="#">
+                <i class="far fa-heart mr-1"> </i>Thông báo
+                <small class="text-white"> (0)</small>
+              </a>
+            </li>
+
+            {% comment %} <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-user-alt mr-1"></i>
+                My Account
+              </a>
+            </li> {% endcomment %}
+
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle
+                text-white" style="font-size: 12px;" id="pagesDropdown" href="#"
+                data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"><i
+                  class="fas fa-user-alt mr-1 text-white"></i>Tài khoản</a></a>
+            <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown">
+
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:profile' %}">Profile</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:cart' %}">Cart</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:orders' %}">Orders</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:password-change' %}">Change
+                Password</a>
+
+              <hr>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:logout' %}">Log Out</a>
+
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link text-white" style="font-size: 15px;" href="{% url 'store:login' %}">Đăng nhập</a></li>
+            <li class="nav-item"><a class="nav-link text-white" style="font-size: 15px;" href="{% url 'store:register' %}">Tạo tài khoản</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
