@@ -11,8 +11,8 @@
         <!-- CATEGORIES SECTION-->
         <section class="pt-5">
           <header class="text-center">
-            <p class="small text-muted small text-uppercase mb-1">Carefully created collections</p>
-            <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
+            <p class="small text-muted small text-uppercase mb-1">Xu hướng mua sắm</p>
+            <h2 class="h5 text-uppercase mb-4">Các danh mục sảm phẩm</h2>
           </header>
           <div class="row">
           {% if categories %}
@@ -25,7 +25,7 @@
                     {% else %}
                     <img class="img-fluid" src="{% static 'img/cat-img-1.jpg' %}" alt="{{ category.title }}">
                   {% endif %}
-                  <strong class="category-item-title">{{ category.title }}</strong>
+                  <strong class="category-item-title text-white text-center text-uppercase" style="background: #00bfff;">{{ category.title }}</strong>
                 </a>
               </div>
             
