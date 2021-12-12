@@ -37,9 +37,9 @@ class AddressForm(forms.ModelForm):
 
 
 class PasswordChangeForm(PasswordChangeForm):
-    old_password = forms.CharField(label=_("Old Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password', 'auto-focus':True, 'class':'form-control', 'placeholder':'Current Password'}))
-    new_password1 = forms.CharField(label=_("New Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control', 'placeholder':'New Password'}), help_text=password_validation.password_validators_help_text_html())
-    new_password2 = forms.CharField(label=_("Confirm Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control', 'placeholder':'Confirm Password'}))
+    old_password = forms.CharField(label=_("Mật khẩu hiện tại"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password', 'auto-focus':True, 'class':'form-control', 'placeholder':'Nhập mật khẩu hiện tại'}))
+    new_password1 = forms.CharField(label=_("Mật khẩu mới"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control', 'placeholder':'Nhập mật khẩu mới'}), help_text=password_validation.password_validators_help_text_html())
+    new_password2 = forms.CharField(label=_("Nhập lại mật khẩu mới"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control', 'placeholder':'Nhập lại mật khẩu mới'}))
 
 
 class PasswordResetForm(PasswordResetForm):

@@ -78,10 +78,10 @@ STATUS_CHOICES = (
 )
 
 class Order(models.Model):
-    user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
-    address = models.ForeignKey(Address, verbose_name="Shipping Address", on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, verbose_name="Product", on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(verbose_name="Quantity")
+    user = models.ForeignKey(User, verbose_name="Tên tài khoản", on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, verbose_name="Địa chỉ", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, verbose_name="Sản phẩm", on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(verbose_name="Số lượng")
     ordered_date = models.DateTimeField(auto_now_add=True, verbose_name="Ordered Date")
     status = models.CharField(
         choices=STATUS_CHOICES,

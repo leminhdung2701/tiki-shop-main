@@ -11,8 +11,8 @@
         href="{% url 'store:home' %}">
         <form class="form-inline my-2 my-lg-0" >
           <input class="form-control mr-sm-2" action="" style="width: 410px;font-size: 13.5px" method="GET" type="search"
-            placeholder="Search ..." aria-label="Search" name="q">
-          <button class="btn" style="color: white;border-color: white;font-size: 13.5px ; " type="submit"><i class="fa fa-search" ></i>  Search</button>
+            placeholder="Tìm kiếm ..." aria-label="Search" name="q">
+          <button class="btn" style="color: white;border-color: white;font-size: 13.5px ; " type="submit"><i class="fa fa-search" ></i> Tìm kiếm</button>
         </form>
         <!-- <span class="font-weight-bold text-white">Tiki</span></a> -->
       <button class="navbar-toggler navbar-toggler-right" type="button"
@@ -36,8 +36,7 @@
               {% endfor %}
               {% endif %}
               <hr>
-              <a class="dropdown-item border-0 transition-link" href="{% url 'store:all-categories' %}">All
-                Categories</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:all-categories' %}">Tất cả danh mục</a>
 
             </li>
             <li class="nav-item">
@@ -74,14 +73,13 @@
                   class="fas fa-user-alt mr-1 text-white"></i>Tài khoản</a></a>
             <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown">
 
-              <a class="dropdown-item border-0 transition-link" href="{% url 'store:profile' %}">Profile</a>
-              <a class="dropdown-item border-0 transition-link" href="{% url 'store:cart' %}">Cart</a>
-              <a class="dropdown-item border-0 transition-link" href="{% url 'store:orders' %}">Orders</a>
-              <a class="dropdown-item border-0 transition-link" href="{% url 'store:password-change' %}">Change
-                Password</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:profile' %}">Tài khoản</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:cart' %}">Giỏ hàng</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:orders' %}">Đơn hàng</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:password-change' %}">Đổi mật khẩu</a>
 
               <hr>
-              <a class="dropdown-item border-0 transition-link" href="{% url 'store:logout' %}">Log Out</a>
+              <a class="dropdown-item border-0 transition-link" href="{% url 'store:logout' %}">Đăng xuất</a>
 
             </li>
             {% else %}
