@@ -82,9 +82,9 @@ class Order(models.Model):
     address = models.ForeignKey(Address, verbose_name="Địa chỉ", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name="Sản phẩm", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name="Số lượng")
-    ordered_date = models.DateTimeField(auto_now_add=True, verbose_name="Ordered Date")
+    ordered_date = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian đặt")
     status = models.CharField(
         choices=STATUS_CHOICES,
         max_length=50,
-        default="Pending"
+        default="Đang chuẩn bị hàng"
         )

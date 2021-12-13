@@ -87,7 +87,7 @@
               <div class="bg-light px-4 py-3">
                 <div class="row align-items-center text-center">
                   <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{% url 'store:home' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Tiếp tục mua sắm</a></div>
-                  <div class="col-md-6 text-md-right"><a class="btn btn-outline-dark btn-sm" href="checkout.html">Thanh toán<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
+                  <div class="col-md-6 text-md-right"><a class="btn btn-link p-0 text-dark btn-sm" href="checkout.html">Thanh toán<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
                 </div>
               </div>
             </div>
@@ -121,8 +121,8 @@
                     {% if addresses %}
                       {% for address in addresses %}
                         <div class="mb-3">
-                        <input type="radio" name="address" value="{{address.id}}"> <strong>Địa chỉ {{forloop.counter}}</strong> <br>
-                        ( {{address.locality}}, {{address.city}}, {{address.state}} )
+                        <input type="radio" name="address" style="font-size: 10px;" value="{{address.id}}"> <strong>Địa chỉ {{forloop.counter}}</strong> <br>
+                         {{address.locality}}, {{address.city}}, {{address.state}} 
                         </div>
                       {% endfor %}
                     {% endif %}
@@ -145,8 +145,8 @@
         {% else %}
 
           <div class="text-center py-5">
-            <h3 class="mb-3">Your cart is empty.</h3>
-            <a href="{% url 'store:home' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue shopping</a>
+            <h3 class="mb-3">Giỏ hàng còn trống.</h3>
+            <a href="{% url 'store:home' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Tiếp tục mau sắm</a>
           </div>
 
         {% endif %}

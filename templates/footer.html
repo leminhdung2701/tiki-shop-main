@@ -1,43 +1,47 @@
-<footer class="bg-dark text-white">
+{% load static %}
+<div class="bg-dark" style="height: 2px;">
+
+</div>
+<footer class="text-white " style=" background-color: white">
         <div class="container py-4">
-          <div class="row py-5">
-            <div class="col-md-4 mb-3 mb-md-0">
-              <h6 class="text-uppercase mb-3">Customer services</h6>
-              <ul class="list-unstyled mb-0">
-                <li><a class="footer-link" href="#">Help &amp; Contact Us</a></li>
-                <li><a class="footer-link" href="#">Returns &amp; Refunds</a></li>
-                <li><a class="footer-link" href="#">Online Stores</a></li>
-                <li><a class="footer-link" href="#">Terms &amp; Conditions</a></li>
-              </ul>
+
+          
+            
+          
+          </section>
+          <!-- /*----------------------------app---------------------------------*/ -->
+          <section class="app-container">
+            <p class="text-center" style="font-size: 17px;">Tải ứng dụng Tiki</p>
+            <div class="app-google">
+              <img src="{% static 'img/appstore.jpg' %} ">
+              <img src="{% static 'img/googleplay.jpg' %} ">
             </div>
-            <div class="col-md-4 mb-3 mb-md-0">
-              <h6 class="text-uppercase mb-3">Company</h6>
-              <ul class="list-unstyled mb-0">
-                <li><a class="footer-link" href="#">What We Do</a></li>
-                <li><a class="footer-link" href="#">Available Services</a></li>
-                <li><a class="footer-link" href="#">Latest Posts</a></li>
-                <li><a class="footer-link" href="#">FAQs</a></li>
-              </ul>
-            </div>
-            <div class="col-md-4">
-              <h6 class="text-uppercase mb-3">Social media</h6>
-              <ul class="list-unstyled mb-0">
-                <li><a class="footer-link" href="#">Twitter</a></li>
-                <li><a class="footer-link" href="#">Instagram</a></li>
-                <li><a class="footer-link" href="#">Tumblr</a></li>
-                <li><a class="footer-link" href="#">Pinterest</a></li>
-              </ul>
-            </div>
+            
+          </section>
+          
+          <!-- /*---------------------------footer------------------------*/ -->
+          <div class="footer-top text-dark" style="font-size:11px;">
+            <li><a href=""><img src="{% static 'img/dathongbao.png' %}" alt=""></a></li>
+            <li><a href="">Liên hệ</a></li>
+            <li><a href="">Tuyển dụng</a></li>
+            <li><a href="">Giới thiệu</a></li>
+            <li>
+              <a href="" class="fab fa-facebook-f"></a>
+              <a href="" class="fab fa-twitter"></a>
+              <a href="" class="fab fa-youtube"></a>
+            </li>
           </div>
-          <div class="border-top pt-4" style="border-color: #1d1d1d !important">
-            <div class="row">
-              <div class="col-lg-6">
-                <p class="small text-muted mb-0">&copy; 2020 All rights reserved.</p>
-              </div>
-              <div class="col-lg-6 text-lg-right">
-                <p class="small text-muted mb-0">Website by <a class="text-white reset-anchor" href="https://www.youtube.com/vijaythapa" target="_blank">Vijay Thapa</a></p>
-              </div>
-            </div>
+          <div class="footer-center text-dark" style="font-size: 11px;">
+            <p>
+              Công ty Cổ phần Dự Kim với số đăng ký kinh doanh: 0123456789<br>
+              Địa chỉ đăng ký: 334 Nguyễn Trãi, Thanh Xuân Trung, Thanh Xuân, Hà Nội, Việt Nam - 024 9999 6666<br>
+              Đặt hàng online : <b>024 9999 6666</b> .
+            </p>
+          
           </div>
+          <div class="footer-bottom text-dark" style="font-size: 11px;">
+            ©Tiki All rights reserved
+          </div>
+
         </div>
       </footer>
