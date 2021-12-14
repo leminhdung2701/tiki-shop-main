@@ -6,13 +6,14 @@
       <div class="container py-5">
         <div class="col-md-8 offset-2">
 
-        <h1 class="mb-5">Create Your Account</h1>
+        <h1 class="mb-5">Tạo tài khoản</h1>
         
         
         <div class="card mb-4" id="forms">
           <div class="card-header">
             <small>
-            With a this account, you can save time during checkout, access your shopping bag from any device and view your order history.
+            Với tài khoản này, bạn có thể tiết kiệm thời gian trong quá trình thanh toán, truy cập vào túi mua hàng của bạn từ bất
+            kỳ thiết bị nào và xem lịch sử đơn hàng của bạn.
             </small>
           </div>
           <div class="card-body">
@@ -30,7 +31,7 @@
                         <small class="text-danger">{{fm.errors|striptags}}</small>
                     </div>
                 {% endfor %}
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-primary" type="submit">Xác nhận</button>
               </fieldset>
 
               {% if form.non_field_errors %}
@@ -45,7 +46,7 @@
 
             <hr>
 
-            Already have an account? <a href="{% url 'store:login' %}">Log In </a>
+            Bạn có sẵn tài khoản? <a href="{% url 'store:login' %}">Đăng nhập </a>
             
           </div>
         </div>
