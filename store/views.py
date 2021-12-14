@@ -8,8 +8,8 @@ from django.views import View
 import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
-
-
+from django.db.models import Q
+from django.views.generic import ListView
 # Create your views here.
 
 def home(request):
@@ -209,3 +209,30 @@ def shop(request):
 
 def test(request):
     return render(request, 'store/test.html')
+
+# class UserSearch(View):
+#     def get(self, request, *args, **kwargs):
+#         query = self.request.GET.get('query')
+#         product_list = Product.objects.filter(
+#             Q(title__contains=query)
+#         )
+
+#         context = {
+#             'product_list': product_list,
+#         }
+
+#         return render(request, 'store/search.html', context)
+class SearchView(ListView):
+    model = Product
+    template_name = 'store/search.html'
+    context_object_name = 'all_search_results'
+
+    def get_queryset(self):
+        result = super(SearchView, self).get_queryset()
+        query = self.request.GET.get('query')
+        if query:
+            postresult = Product.objects.filter(title__icontains=query)
+            result = postresult
+        else:
+            result = None
+        return result

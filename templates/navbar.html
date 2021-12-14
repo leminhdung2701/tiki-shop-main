@@ -9,10 +9,9 @@
       <a
         class="navbar-brand"
         href="{% url 'store:home' %}">
-        <!--Search -->
-        <form class="form-inline my-2 my-lg-0" >
-          <input class="form-control mr-sm-2" action="" style="width: 410px;font-size: 13.5px" method="GET" type="search"
-            placeholder="Tìm kiếm ..." aria-label="Search" name="q">
+        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'store:search' %}" >
+          <input class="form-control mr-sm-2" action="" style="width: 410px;font-size: 13.5px" method="GET" type="text"
+            placeholder="Tìm kiếm ..." aria-label="Search" name="query" value="{{ request.GET.query }}">
           <button class="btn" style="color: white;border-color: white;font-size: 13.5px ; " type="submit"><i class="fa fa-search" ></i> Tìm kiếm</button>
         </form>
         <!-- <span class="font-weight-bold text-white">Tiki</span></a> -->

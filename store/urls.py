@@ -2,13 +2,14 @@ from store.forms import LoginForm, PasswordChangeForm, PasswordResetForm, SetPas
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-
+from .views import SearchView
 
 app_name = 'store'
 
 
 urlpatterns = [
     path('', views.home, name="home"),
+     path('search/', SearchView.as_view(), name='search'),
     # URL for Cart and Checkout
     path('add-to-cart/', views.add_to_cart, name="add-to-cart"),
     path('remove-cart/<int:cart_id>/', views.remove_cart, name="remove-cart"),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('accounts/password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='account/password_reset_complete.html'), name="password_reset_complete"),
 
     path('product/test/', views.test, name="test"),
+    # path('search/', SearchView.as_view(), name='product-search'),
 
     
 ]
