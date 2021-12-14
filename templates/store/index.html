@@ -3,17 +3,26 @@
 
       {% block content %}
 
-      <!-- HERO SECTION-->
+      <!-- SLIDER-->
       <div class="container" style="margin-top: 10px;">
-        <section class="hero pb-3 bg-cover  d-flex " style="background: url({% static 'img/tiki-banner.jpg' %})">
-          <div class="container py-5">
-            <!-- <div class="row px-4 px-lg-5">
-              <div class="col-lg-6">
-                <p class="text-muted small text-uppercase mb-2"></p>
-                <h1 class="h2 text-uppercase mb-3"></h1><a class="btn btn-dark" href="{% url 'store:all-categories' %}">Mua sắm ngay</a>
-              </div> -->
-            <!-- </div> -->
-          </div>
+        
+        <section  id="Slider">
+          
+            <div class="aspect-ratio-169">
+              <img src="{% static 'img/slide1.jpg' %}">
+              <img src="{% static 'img/slide2.jpg' %}">
+              <img src="{% static 'img/slide3.jpg' %}">
+              <img src="{% static 'img/slide4.jpg' %}">              
+             
+            </div>            
+            <div class="dot-container">
+              <div class="dot active"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            
+            </div>
+          
         </section>
 
 
@@ -171,4 +180,37 @@
         </section>
       </div>
 
+      <script>
+
+
+        const imgPosition = document.querySelectorAll(".aspect-ratio-169 img")
+        const imgContainer = document.querySelector('.aspect-ratio-169')
+        const dotItem = document.querySelectorAll(".dot")
+        let imgNuber = imgPosition.length
+        let index = 3
+        imgPosition.forEach(function (image, index) {
+          image.style.left = index * 100 + "%"
+          dotItem[index].addEventListener("click", function () {
+            slider(index)
+          })
+        })
+
+        function imgSlide() {
+          index++;
+          if (index >= imgNuber) { index = 0 }
+          slider(index)
+        }
+
+
+        function slider(index) {
+          imgContainer.style.left = "-" + index * 100 + "%"
+          const dotActive = document.querySelector('.active')
+          dotActive.classList.remove("active")
+          dotItem[index].classList.add("active")
+
+        }
+        setInterval(imgSlide, 3000)
+
+      </script>
+      
       {% endblock content %}

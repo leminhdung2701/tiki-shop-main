@@ -8,6 +8,51 @@
     margin-left: 80px; 
 }
 
+#Slider{
+    padding-bottom: 30px;
+    border-bottom: 2px solid #000;
+    overflow: hidden;
+}
+
+.aspect-ratio-169{
+    display: block;
+    position: relative;
+    padding-top: 56.25% ;
+    transition: 0.3;    
+}
+
+.aspect-ratio-169 img{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+  
+.dot-container{
+    position: absolute;
+    height: 30px;
+    width: 77% ;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.dot{
+    height: 16px;
+    width: 16px;
+    background-color: #CCC;
+    border-radius: 50%;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.dot.active{
+    background-color: #333;
+}
+
 /*---------------------------app------------------------*/
 .app-container{
     text-align: center;
