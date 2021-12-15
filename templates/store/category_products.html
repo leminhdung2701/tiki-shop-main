@@ -9,13 +9,13 @@
           <div class="container">
             <div class="row px-4 px-lg-5 py-lg-4 align-items-center">
               <div class="col-lg-6">
-                <h1 class="h2 text-uppercase mb-0">Shop - {{category.title}}</h1>
+                <h1 class="h2 text-uppercase mb-0" style="font-size:25px">{{category.title}}</h1>
               </div>
               <div class="col-lg-6 text-lg-right">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb justify-content-lg-end mb-0 px-0">
-                    <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'store:all-categories' %}">Category</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'store:all-categories' %}">Danh mục</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{category.title}}</li>
                   </ol>
                 </nav>
@@ -28,7 +28,7 @@
             <div class="row">
               <!-- SHOP SIDEBAR-->
               <div class="col-lg-3 order-2 order-lg-1">
-                <h5 class="text-uppercase mb-4">Categories</h5>
+                <h5 class="text-uppercase mb-4">Các danh mục</h5>
 
                 {% if categories %}
                   {% for cat in categories %}
@@ -40,7 +40,7 @@
                   {% endfor %}
                 {% endif %}
 
-                <h6 class="text-uppercase mb-4">Price range</h6>
+                <h6 class="text-uppercase mb-4">Khoảng giá</h6>
                 <div class="price-range pt-4 mb-5">
                   <div id="range"></div>
                   <div class="row pt-2">
