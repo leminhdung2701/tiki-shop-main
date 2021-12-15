@@ -209,7 +209,9 @@ def shop(request):
     return render(request, 'store/shop.html')
 
 
-
+@login_required
+def checkout_test(request):
+    return render(request, 'store/checkout.html')
 
 
 def test(request):

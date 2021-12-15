@@ -14,7 +14,7 @@
               <div class="col-lg-6 text-lg-right">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb justify-content-lg-end mb-0 px-0">
-                    <li class="breadcrumb-item"><a href="index.html">trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Trang chủ</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
                   </ol>
                 </nav>
@@ -63,7 +63,7 @@
                         <p class="mb-0 small">${{cart_product.product.price}}</p>
                       </td>
                       <td class="align-middle border-0">
-                        <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">Số lượng</span>
+                        <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">SL   </span>
                           <div class="quantity">
                             <a href="{% url 'store:minus-cart' cart_product.id %}" class="dec-btn p-0 ml-2"><i class="fas fa-minus"></i></a>
                             {% comment %} <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button> {% endcomment %}
@@ -87,7 +87,7 @@
               <div class="bg-light px-4 py-3">
                 <div class="row align-items-center text-center">
                   <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{% url 'store:home' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Tiếp tục mua sắm</a></div>
-                  <div class="col-md-6 text-md-right"><a class="btn btn-link p-0 text-dark btn-sm" href="checkout.html">Thanh toán<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
+                  <div class="col-md-6 text-md-right"><a class="btn btn-link p-0 text-dark btn-sm" href="{% url 'store:checkout-test' %}">Thanh toán<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
                 </div>
               </div>
             </div>

@@ -9,7 +9,7 @@ app_name = 'store'
 
 urlpatterns = [
     path('', views.home, name="home"),
-     path('search/', SearchView.as_view(), name='search'),
+    path('search/', SearchView.as_view(), name='search'),
     # URL for Cart and Checkout
     path('add-to-cart/', views.add_to_cart, name="add-to-cart"),
     path('remove-cart/<int:cart_id>/', views.remove_cart, name="remove-cart"),
@@ -17,6 +17,7 @@ urlpatterns = [
     path('minus-cart/<int:cart_id>/', views.minus_cart, name="minus-cart"),
     path('cart/', views.cart, name="cart"),
     path('checkout/', views.checkout, name="checkout"),
+    path('checkout-test/', views.checkout_test, name="checkout-test"),
     path('orders/', views.orders, name="orders"),
 
     #URL for Products
