@@ -15,9 +15,14 @@ from django.views.generic import ListView
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:4]
     products = Product.objects.filter(is_active=True, is_featured=True)[:8]
+    all_categories = Category.objects.all()
+    all_products = Product.objects.all()   
+   
     context = {
         'categories': categories,
         'products': products,
+        'all_categories': all_categories,
+        'all_products': all_products,
     }
     return render(request, 'store/index.html', context)
 
