@@ -80,34 +80,28 @@
               <div class="p-4 p-lg-5 bg-white">
                 <div class="row">
                   <div class="col-lg-8">
-                    <div class="media mb-3"><img class="rounded-circle" src="{% static 'img/customer-1.png' %}" alt="" width="50">
+                    
+                  {% if not product.comments.all %}
+                      No Comments Yet...<a href="{% url 'store:add-comment' product.slug %}">
+                      Add one
+                      </a>
+                  
+                  {% else %}
+                    <a class = "btn btn-primary" href="{% url 'store:add-comment' product.slug %}" >Add comment</a>
+                    <br/><br>
+                    {% for comment in product.comments.all %}
+
+                     <div class="media mb-3"><img class="rounded-circle" src="{% static 'img/customer-1.png' %}" alt="" width="50">
                       <div class="media-body ml-3">
-                        <h6 class="mb-0 text-uppercase">Jason Doe</h6>
-                        <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
-                        <ul class="list-inline mb-1 text-xs">
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
-                        </ul>
-                        <p class="text-small mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h6 class="mb-0 text">{{comment.commenter_name }}</h6>
+                        <p class="small text-muted mb-0 text-uppercase">{{comment.date_added}}</p>
+                        <p class="text mb-0 text-muted">{{comment.comment_body}}</p>
                       </div>
-                    </div>
-                    <div class="media"><img class="rounded-circle" src="{% static 'img/customer-2.png' %}" alt="" width="50">
-                      <div class="media-body ml-3">
-                        <h6 class="mb-0 text-uppercase">Jason Doe</h6>
-                        <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
-                        <ul class="list-inline mb-1 text-xs">
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
-                        </ul>
-                        <p class="text-small mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                      </div>
-                    </div>
+                     </div>
+                     <br/><br>
+                    {% endfor %}
+                  {% endif %}
+              
                   </div>
                 </div>
               </div>

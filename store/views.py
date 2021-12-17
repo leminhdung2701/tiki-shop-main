@@ -1,8 +1,8 @@
 import django
 from django.contrib.auth.models import User
-from store.models import Address, Cart, Category, Order, Product
+from store.models import Address, Cart, Category, Order, Product,Comment
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import RegistrationForm, AddressForm
+from .forms import RegistrationForm, AddressForm,CommentForm
 from django.contrib import messages
 from django.views import View
 import decimal
@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
 from django.db.models import Q
 from django.views.generic import ListView
+from datetime import datetime
 # Create your views here.
 
 def home(request):
@@ -30,11 +31,13 @@ def home(request):
 def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
+    
     context = {
         'product': product,
         'related_products': related_products,
 
     }
+   
     return render(request, 'store/detail.html', context)
 
 
@@ -243,3 +246,33 @@ class SearchView(ListView):
         else:
             result = None
         return result
+def add_comment(request, slug):
+    eachProduct = get_object_or_404(Product, slug=slug)
+    # eachProduct = Product.objects.get(id=pk)
+
+    form = CommentForm(instance=eachProduct)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=eachProduct)
+        if form.is_valid():
+            name = request.user.username
+            body = form.cleaned_data['comment']
+            c = Comment(product=eachProduct, commenter_name=name, comment_body=body, date_added=datetime.now())
+            c.save()
+            related_products = Product.objects.exclude(id=eachProduct.id).filter(is_active=True, category=eachProduct.category)
+            context = {
+                'product': eachProduct,
+                'related_products': related_products,
+            }
+            return render(request, 'store/detail.html', context)
+        else:
+            print('form is invalid')    
+    else:
+        form = CommentForm()    
+
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'store/add_comment.html', context)

@@ -9,7 +9,7 @@ from django.db.models import fields
 from django.forms import widgets
 from django.forms.fields import CharField
 from django.utils.translation import gettext, gettext_lazy as _
-
+from . models import Product, Comment
 
 
 class RegistrationForm(UserCreationForm):
@@ -50,3 +50,14 @@ class SetPasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(label=_("New Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}), help_text=password_validation.password_validators_help_text_html())
     new_password2 = forms.CharField(label=_("Confirm Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password','class':'form-control'}))
 
+class CommentForm(forms.ModelForm):
+    comment = forms.CharField(
+        label='',
+        widget=forms.Textarea(
+            attrs={'rows': '3',
+                   'placeholder': 'Say Something...'}
+        ))
+
+    class Meta:
+        model = Comment
+        fields = ['comment']

@@ -51,7 +51,15 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-
+class Comment(models.Model):
+    product = models.ForeignKey(Product, related_name="comments", on_delete=models.CASCADE)
+    commenter_name = models.CharField(max_length=200)
+    comment_body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return '%s - %s' % (self.product.name, self.commenter_name)
+        
 class Cart(models.Model):
     user = models.ForeignKey(User, verbose_name="tên người dùng", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name="sản phẩm", on_delete=models.CASCADE)
