@@ -60,7 +60,7 @@
                         </div>
                       </th>
                       <td class="align-middle border-0">
-                        <p class="mb-0 small">${{cart_product.product.price}}</p>
+                        <p class="mb-0 small">{{cart_product.product.price}} đ</p>
                       </td>
                       <td class="align-middle border-0">
                         <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">SL   </span>
@@ -74,7 +74,7 @@
                         </div>
                       </td>
                       <td class="align-middle border-0">
-                        <p class="mb-0 small">${{cart_product.total_price|intcomma}}</p>
+                        <p class="mb-0 small">{{cart_product.total_price|intcomma}} đ</p>
                       </td>
                       <td class="align-middle border-0"><a class="reset-anchor" href="{% url 'store:remove-cart' cart_product.id %}"><i class="fas fa-trash-alt small text-muted"></i></a></td>
                     </tr>
@@ -97,10 +97,10 @@
                 <div class="card-body">
                   <h5 class="text-uppercase mb-4">Tổng cộng</h5>
                   <ul class="list-unstyled mb-0">
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Tổng hàng</strong><span class="text-muted small">${{amount|intcomma}}</span></li>
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Phí giao hàng</strong><span class="text-muted small">+ ${{shipping_amount}}</span></li>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Tổng hàng</strong><span class="text-muted small">{{amount|intcomma}} đ</span></li>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Phí giao hàng</strong><span class="text-muted small">+ {{shipping_amount}} đ</span></li>
                     <li class="border-bottom my-2"></li>
-                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Tổng</strong><span>${{total_amount|intcomma}}</span></li>
+                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Tổng</strong><span>{{total_amount|intcomma}} đ</span></li>
                     <li>
 
                       {% comment %} <form action="#">

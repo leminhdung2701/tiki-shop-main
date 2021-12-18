@@ -35,7 +35,7 @@
           <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
         </ul>
         <h1>{{product.title}}</h1>
-        <p class="text-muted lead">${{product.price}}</p>
+        <p class="text-muted lead">{{product.price}} đ</p>
         <p class="text-small mb-4">{{product.short_description}}</p>
 
         <div class="row align-items-stretch mb-4">
@@ -54,7 +54,7 @@
           <div class="col-sm-3 pl-sm-0">
             {% comment %} <a
               class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0"
-              href="{% url 'store:add-to-cart' %}">Add to cart</a> {% endcomment %}
+              href="{% url 'store:add-to-cart' %}">Thêm vào giỏ</a> {% endcomment %}
 
             <form action="{% url 'store:add-to-cart' %}">
               <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
@@ -131,7 +131,7 @@
 
 
     <!-- RELATED PRODUCTS-->
-    <h2 class="h5 text-uppercase mb-4">Related products</h2>
+    <h2 class="h5 text-uppercase mb-4">Xem gần đây</h2>
     <div class="row">
 
       {% if related_products %}
@@ -159,7 +159,7 @@
             </div>
           </div>
           <h6> <a class="reset-anchor" href="{% url 'store:product-detail' rp.slug %}">{{rp.title}}</a></h6>
-          <p class="small text-muted">${{rp.price}}</p>
+          <p class="small text-muted">{{rp.price}} đ</p>
         </div>
       </div>
 
