@@ -1,89 +1,111 @@
 {% extends 'base.html' %}
 {% load static %}
 
-    {% block content %}
+{% block content %}
+<style>
+  .profile-pic {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+  }
+</style>
+<div class="container py-5">
+  {% include 'partials/_messages.html' %}
 
-      <div class="container py-5">
-        {% include 'partials/_messages.html' %}
+  <div class="jumbotron">
+    <h1>{{request.user.first_name}} {{request.user.last_name}}</h1>
+    <img class="profile-pic" src="{{request.user.profile.profile_pic.url}}">
+    <p><strong>Email:</strong> {{request.user.email}}</p>
+    <p><strong>Tên tài khoản:</strong> {{request.user.username}}</p>
+    <div class="col-md-9">
+      <div class="card card-body">
 
-        <div class="jumbotron">
-          <h1>{{request.user.first_name}} {{request.user.last_name}}</h1>
-          <p><strong>Email:</strong> {{request.user.email}}</p>
-          <p><strong>Tên tài khoản:</strong> {{request.user.username}}</p>
-          <p><a class="btn btn-primary btn-large" href="{% url 'store:add-address' %}">Thêm địa chỉ »</a> <a class="btn btn-outline-primary btn-large" href="#">Đơn hàng của bạn »</a></p>
-        </div>
+        <form method="POST" action="" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{form.as_p}}
 
-
-        <div class="row">
-
-          <div class="col-lg-6">
-            <div class="card mb-4" id="headings">
-              <div class="card-header">Địa chỉ <span class="float-right"><a href="{% url 'store:add-address' %}">Thêm địa chỉ</a></span></div>
-              <div class="card-body">
-                {% if addresses %}
-                    {% for address in addresses %}
-                        <h4 class="mb-3">Địa chỉ {{forloop.counter}}</h4> 
-                        
-                        <span class="float-right"><a href="{% url 'store:remove-address' address.id %}"><i class="fas fa-trash-alt small text-muted"></i></a></span>
-
-                        <p>
-                            <strong>Địa chỉ cụ thể: </strong>{{address.locality}} <br>
-                            <strong>Huyện/Thành Phố: </strong>{{address.city}} <br>
-                            <strong>Tỉnh: </strong>{{address.state}} <br>
-                        </p>
-
-                        <hr>
-                    {% endfor %}
-                {% else %}
-                <div class="text-danger">
-                  Địa chỉ chưa được thêm.
-                </div>
-                {% endif %}
-                
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="card mb-4" id="tables">
-              <div class="card-header">Đơn hàng</div>
-              <div class="card-body">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Sản phẩm </th>
-                      <th>Trạng thái</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% if orders %}
-                      {% for order in orders %}
-                        <tr>
-                          <td>{{forloop.counter}}</td>
-                          <td>{{order.product.title}}</td>
-                          <td>
-                            {{order.status}}
-                          </td>
-                        </tr>
-                      {% endfor %}
-                    {% else %}
-                    <tr>
-                      <td class="text-danger" colspan="3">Bạn chưa đặt hàng bất cứ đơn hàng nào.</td>
-                    </tr>
-                    {% endif %}
-                    
-                    
-                  </tbody>
-                </table>
-                
-              </div>
-            </div>
-          </div>
-          
-        </div>
-    
-        
-        
+          <input class="btn btn-primary" type="submit" name="Update Information">
+        </form>
       </div>
+    </div>
+    <p><a class="btn btn-primary btn-large" href="{% url 'store:add-address' %}">Thêm địa chỉ »</a> <a
+        class="btn btn-outline-primary btn-large" href="#">Đơn hàng của bạn »</a></p>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-lg-6">
+      <div class="card mb-4" id="headings">
+        <div class="card-header">Địa chỉ <span class="float-right"><a href="{% url 'store:add-address' %}">Thêm địa
+              chỉ</a></span></div>
+        <div class="card-body">
+          {% if addresses %}
+          {% for address in addresses %}
+          <h4 class="mb-3">Địa chỉ {{forloop.counter}}</h4>
+
+          <span class="float-right"><a href="{% url 'store:remove-address' address.id %}"><i
+                class="fas fa-trash-alt small text-muted"></i></a></span>
+
+          <p>
+            <strong>Địa chỉ cụ thể: </strong>{{address.locality}} <br>
+            <strong>Huyện/Thành Phố: </strong>{{address.city}} <br>
+            <strong>Tỉnh: </strong>{{address.state}} <br>
+          </p>
+
+          <hr>
+          {% endfor %}
+          {% else %}
+          <div class="text-danger">
+            Địa chỉ chưa được thêm.
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card mb-4" id="tables">
+        <div class="card-header">Đơn hàng</div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Sản phẩm </th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if orders %}
+              {% for order in orders %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{order.product.title}}</td>
+                <td>
+                  {{order.status}}
+                </td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td class="text-danger" colspan="3">Bạn chưa đặt hàng bất cứ đơn hàng nào.</td>
+              </tr>
+              {% endif %}
+
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>
 {% endblock content %}

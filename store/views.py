@@ -1,8 +1,8 @@
 import django
 from django.contrib.auth.models import User
-from store.models import Address, Cart, Category, Order, Product,Comment
+from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import RegistrationForm, AddressForm,CommentForm
+from .forms import RegistrationForm, AddressForm,CommentForm,ProfileForm
 from django.contrib import messages
 from django.views import View
 import decimal
@@ -17,7 +17,7 @@ def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:4]
     products = Product.objects.filter(is_active=True, is_featured=True)[:8]
     all_categories = Category.objects.all()
-    all_products = Product.objects.all()   
+    all_products = Product.objects.all()     
    
     context = {
         'categories': categories,
@@ -25,6 +25,7 @@ def home(request):
         'all_categories': all_categories,
         'all_products': all_products,
     }
+    
     return render(request, 'store/index.html', context)
 
 
@@ -43,8 +44,9 @@ def detail(request, slug):
         form = CommentForm(request.POST, instance=product)
         if form.is_valid():
             name = request.user.username
+            user = request.user
             body = form.cleaned_data['content']
-            c = Comment(product=product, commenter_name=name, comment_body=body, date_added=datetime.now())
+            c = Comment(product=product,user = user, commenter_name=name, comment_body=body, date_added=datetime.now())
             c.save()          
         else:
             print('form is invalid')    
@@ -91,7 +93,14 @@ class RegistrationView(View):
 def profile(request):
     addresses = Address.objects.filter(user=request.user)
     orders = Order.objects.filter(user=request.user)
-    return render(request, 'account/profile.html', {'addresses':addresses, 'orders':orders})
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES,instance=profile)
+        if form.is_valid():
+            form.save()
+    
+    return render(request, 'account/profile.html', {'addresses':addresses, 'orders':orders,'form':form})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -212,6 +221,21 @@ def checkout(request):
         c.delete()
     return redirect('store:orders')
 
+@login_required
+def add_notifi_like(request,type):
+    user = request.user
+    if request.method == 'GET':
+        noti = get_object_or_404(Notification, user=user)
+        noti.type = 1
+        noti.save()
+
+    
+
+    
+
+    
+
+    
 
 @login_required
 def orders(request):

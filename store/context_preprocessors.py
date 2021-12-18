@@ -1,4 +1,5 @@
-from .models import Category, Cart
+from .models import Category, Cart, Notification
+
 
 
 def store_menu(request):
@@ -6,6 +7,14 @@ def store_menu(request):
     context = {
         'categories_menu': categories,
     }
+    return context
+
+def notification_list(request):    
+    user = request.user
+    notification = Notification.objects.filter(user=user)   
+    context = {
+        'notification_list': notification,
+    }  
     return context
 
 def cart_menu(request):

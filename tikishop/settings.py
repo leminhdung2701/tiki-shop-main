@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'store',
+    'annoying'
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.context_preprocessors.store_menu',
                 'store.context_preprocessors.cart_menu',
-            ],
+                'store.context_preprocessors.notification_list'
+                ],
         },
     },
 ]

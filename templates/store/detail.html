@@ -98,30 +98,30 @@
             <div class="col-lg-8">
               <!--display coment-->
               {% if not product.comments.all %}
-                No Comments Yet...               
+              No Comments Yet...
 
-              {% else %}                
-                <br /><br>
-                {% for comment in product.comments.all %}
-                  <div class="media mb-3"><img class="rounded-circle" src="{% static 'img/customer-1.png' %}" alt=""
-                      width="50">
-                    <div class="media-body ml-3">
-                      <h6 class="mb-0 text">{{comment.commenter_name }}</h6>
-                      <p class="small text-muted mb-0 text-uppercase">{{comment.date_added}}</p>
-                      <p class="text mb-0 text-muted">{{comment.comment_body}}</p>
-                    </div>
-                  </div>
-                <br /><br>
-                {% endfor %}
+              {% else %}
+              <br /><br>
+              {% for comment in product.comments.all %}
+              <div class="media mb-3"><img class="rounded-circle" src="{{comment.user.profile.profile_pic.url}}" alt=""
+                  width="50">
+                <div class="media-body ml-3">
+                  <h6 class="mb-0 text">{{comment.commenter_name }}</h6>
+                  <p class="small text-muted mb-0 text-uppercase">{{comment.date_added}}</p>
+                  <p class="text mb-0 text-muted">{{comment.comment_body}}</p>
+                </div>
+              </div>
+              <br /><br>
+              {% endfor %}
               {% endif %}
 
             </div>
-            <div class="col-lg-12">               
-              <form action="" method="post">              
+            <div class="col-lg-12">
+              <form action="" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button class="btn btn-primary btn-block " type="submit">Hoàn tất</button>
-              
+
               </form>
             </div>
           </div>

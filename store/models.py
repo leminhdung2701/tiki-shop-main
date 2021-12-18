@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from annoying.fields import AutoOneToOneField
 # Create your models here.
 class Address(models.Model):
     user = models.ForeignKey(User, verbose_name="Tên người dùng", on_delete=models.CASCADE)
@@ -29,7 +29,10 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-
+class Profile(models.Model):
+    user = AutoOneToOneField(User, primary_key=True,on_delete=models.CASCADE)
+    phone = models.CharField(max_length=200, null=True)
+    profile_pic = models.ImageField(default="avatar/anna.jpg", null=True, blank=True,upload_to='avatar')
 class Product(models.Model):
     title = models.CharField(max_length=150, verbose_name="Tên sản phẩm")
     slug = models.SlugField(max_length=160, verbose_name="Slug sản phẩm")
@@ -54,11 +57,21 @@ class Product(models.Model):
 class Comment(models.Model):
     product = models.ForeignKey(Product, related_name="comments", on_delete=models.CASCADE)
     commenter_name = models.CharField(max_length=200)
+    user = models.ForeignKey(User, related_name="users", on_delete=models.CASCADE)
     comment_body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return str(self.product.title)
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, verbose_name="tên người dùng", on_delete=models.CASCADE)
+    type = models.PositiveIntegerField(default=1)
+    content = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return str(self.user)
         
 class Cart(models.Model):
     user = models.ForeignKey(User, verbose_name="tên người dùng", on_delete=models.CASCADE)

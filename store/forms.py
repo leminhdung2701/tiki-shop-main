@@ -9,7 +9,7 @@ from django.db.models import fields
 from django.forms import widgets
 from django.forms.fields import CharField
 from django.utils.translation import gettext, gettext_lazy as _
-from . models import Product, Comment
+from . models import Product, Comment,Profile
 
 
 class RegistrationForm(UserCreationForm):
@@ -60,3 +60,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+        
+class ProfileForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields = '__all__'
+		exclude = ['user']
