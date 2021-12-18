@@ -47,17 +47,16 @@ class PasswordResetForm(PasswordResetForm):
 
 
 class SetPasswordForm(SetPasswordForm):
-    new_password1 = forms.CharField(label=_("New Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}), help_text=password_validation.password_validators_help_text_html())
-    new_password2 = forms.CharField(label=_("Confirm Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password','class':'form-control'}))
+    new_password1 = forms.CharField(label=_("Mật khẩu mới"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password', 'class':'form-control'}), help_text=password_validation.password_validators_help_text_html())
+    new_password2 = forms.CharField(label=_("Xác nhận mật khậu"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'new-password','class':'form-control'}))
 
 class CommentForm(forms.ModelForm):
-    comment = forms.CharField(
-        label='',
-        widget=forms.Textarea(
-            attrs={'rows': '3',
-                   'placeholder': 'Say Something...'}
-        ))
+    content = forms.CharField(label=_("Đánh giá sản phẩm"),widget=forms.Textarea(attrs={
+        'class': 'md-textarea form-control',
+        'placeholder': 'bình luận ở đây ...',
+        'rows': '4',
+    }))
 
     class Meta:
         model = Comment
-        fields = ['comment']
+        fields = ['content']

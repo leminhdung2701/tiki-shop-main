@@ -31,12 +31,26 @@ def home(request):
 def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
-    
+    form = CommentForm(instance=product)
     context = {
+        'form': form,
         'product': product,
         'related_products': related_products,
 
     }
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=product)
+        if form.is_valid():
+            name = request.user.username
+            body = form.cleaned_data['content']
+            c = Comment(product=product, commenter_name=name, comment_body=body, date_added=datetime.now())
+            c.save()          
+        else:
+            print('form is invalid')    
+    else:
+        form = CommentForm()    
+
    
     return render(request, 'store/detail.html', context)
 
@@ -220,18 +234,7 @@ def checkout_test(request):
 def test(request):
     return render(request, 'store/test.html')
 
-# class UserSearch(View):
-#     def get(self, request, *args, **kwargs):
-#         query = self.request.GET.get('query')
-#         product_list = Product.objects.filter(
-#             Q(title__contains=query)
-#         )
 
-#         context = {
-#             'product_list': product_list,
-#         }
-
-#         return render(request, 'store/search.html', context)
 class SearchView(ListView):
     model = Product
     template_name = 'store/search.html'
@@ -246,33 +249,6 @@ class SearchView(ListView):
         else:
             result = None
         return result
-def add_comment(request, slug):
-    eachProduct = get_object_or_404(Product, slug=slug)
-    # eachProduct = Product.objects.get(id=pk)
-
-    form = CommentForm(instance=eachProduct)
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST, instance=eachProduct)
-        if form.is_valid():
-            name = request.user.username
-            body = form.cleaned_data['comment']
-            c = Comment(product=eachProduct, commenter_name=name, comment_body=body, date_added=datetime.now())
-            c.save()
-            related_products = Product.objects.exclude(id=eachProduct.id).filter(is_active=True, category=eachProduct.category)
-            context = {
-                'product': eachProduct,
-                'related_products': related_products,
-            }
-            return render(request, 'store/detail.html', context)
-        else:
-            print('form is invalid')    
-    else:
-        form = CommentForm()    
 
 
-    context = {
-        'form': form
-    }
 
-    return render(request, 'store/add_comment.html', context)

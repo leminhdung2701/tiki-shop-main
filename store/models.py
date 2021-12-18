@@ -58,7 +58,7 @@ class Comment(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return '%s - %s' % (self.product.name, self.commenter_name)
+        return str(self.product.title)
         
 class Cart(models.Model):
     user = models.ForeignKey(User, verbose_name="tên người dùng", on_delete=models.CASCADE)

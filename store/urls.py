@@ -25,7 +25,6 @@ urlpatterns = [
     path('categories/', views.all_categories, name="all-categories"),
     path('<slug:slug>/', views.category_products, name="category-products"),
 
-    path('product/<slug:slug>/add-comment', views.add_comment, name='add-comment'),
     path('shop/', views.shop, name="shop"),
 
     # URL for Authentication
