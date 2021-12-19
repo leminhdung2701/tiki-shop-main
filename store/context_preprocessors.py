@@ -11,7 +11,7 @@ def store_menu(request):
 
 def notification_list(request):    
     user = request.user
-    notification = Notification.objects.filter(user=user)   
+    notification = Notification.objects.filter(user=user)[:8]
     context = {
         'notification_list': notification,
     }  

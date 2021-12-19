@@ -15,6 +15,7 @@ urlpatterns = [
     path('remove-cart/<int:cart_id>/', views.remove_cart, name="remove-cart"),
     path('plus-cart/<int:cart_id>/', views.plus_cart, name="plus-cart"),
     path('minus-cart/<int:cart_id>/', views.minus_cart, name="minus-cart"),
+    path('add-notifi-like/', views.add_notifi_like, name="add-notifi-like"),
     path('cart/', views.cart, name="cart"),
     path('checkout/', views.checkout, name="checkout"),
     path('checkout-test/', views.checkout_test, name="checkout-test"),

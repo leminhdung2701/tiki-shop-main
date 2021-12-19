@@ -221,16 +221,17 @@ def checkout(request):
         c.delete()
     return redirect('store:orders')
 
-@login_required
-def add_notifi_like(request,type):
+
+
+
+def add_notifi_like(request):
     user = request.user
-    if request.method == 'GET':
-        noti = get_object_or_404(Notification, user=user)
-        noti.type = 1
-        noti.save()
-
+    product_id = request.GET.get('prod_id')
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'GET':        
+        Notification(user=user, content = user.username + " đã thích sản phẩm " +  product.title ,type=1).save()
     
-
+    return redirect('store:home')
     
 
     
