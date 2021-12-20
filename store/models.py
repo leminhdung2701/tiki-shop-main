@@ -66,6 +66,7 @@ class Comment(models.Model):
 
 class Notification(models.Model):
     user = models.ForeignKey(User, verbose_name="tên người dùng", on_delete=models.CASCADE)
+    slug = models.TextField(default='DEFAULT VALUE')
     type = models.PositiveIntegerField(default=1)
     content = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
