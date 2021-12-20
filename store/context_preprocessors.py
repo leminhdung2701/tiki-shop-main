@@ -10,11 +10,17 @@ def store_menu(request):
     return context
 
 def notification_list(request):    
-    user = request.user
-    notification = Notification.objects.filter(user=user)[:8]
-    context = {
+    
+    
+    if request.user.is_authenticated:
+        user = request.user
+        notification = Notification.objects.filter(user=user)[:8]    
+        context = {
         'notification_list': notification,
-    }  
+    }      
+    else:
+        context = {}
+    
     return context
 
 def cart_menu(request):
