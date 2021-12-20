@@ -66,10 +66,16 @@ def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(is_active=True, category=category)
     categories = Category.objects.filter(is_active=True)
+    filter_price = request.GET.get('filter_price', '')
+    if filter_price != "":
+        print("lọc")
+    else:
+        products = Product.objects.filter(is_active=True, category=category)
     context = {
         'category': category,
         'products': products,
         'categories': categories,
+        'filter_price': filter_price
     }
     return render(request, 'store/category_products.html', context)
 
@@ -224,52 +230,19 @@ def checkout(request):
 
 
 
-@login_required
-def add_notifi_like_home(request):
+def add_notifi_like(request):
     user = request.user
     product_id = request.GET.get('prod_id')
     product = get_object_or_404(Product, id=product_id)
-    if request.method == 'GET':      
-        content=""  
-        title = "Bạn" +" đã thích sản phẩm " +  product.title 
-        slug=product.slug
-        if len(title)>70:  
-            i=70          
-            while title[i] != " ":
-                i=i-1
-            content=title[:i]+" ..."
-        else:
-            content=title
-                
-        Notification(user=user,slug=slug, content =content ,type=1).save()
+    if request.method == 'GET':        
+        Notification(user=user, content = user.username + " đã thích sản phẩm " +  product.title ,type=1).save()
     
     return redirect('store:home')
-
-
-@login_required
-def add_notifi_like_cp(request):
-    user = request.user
-    product_id = request.GET.get('prod_id')
-    product = get_object_or_404(Product, id=product_id)
-    cate_slug=product.category.slug
-    if request.method == 'GET':      
-        content=""  
-        title = "Bạn" +" đã thích sản phẩm " +  product.title 
-        slug=product.slug
-        if len(title)>70:  
-            i=70          
-            while title[i] != " ":
-                i=i-1
-            content=title[:i]+" ..."
-        else:
-            content=title
-                
-        Notification(user=user,slug=slug, content =content ,type=1).save()
-    
-    return redirect('store:category-products',cate_slug)
     
 
-   
+    
+
+    
 
 @login_required
 def orders(request):
