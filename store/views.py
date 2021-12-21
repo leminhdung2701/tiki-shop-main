@@ -230,14 +230,49 @@ def checkout(request):
 
 
 
-def add_notifi_like(request):
+@login_required
+def add_notifi_like_home(request):
     user = request.user
     product_id = request.GET.get('prod_id')
     product = get_object_or_404(Product, id=product_id)
-    if request.method == 'GET':        
-        Notification(user=user, content = user.username + " đã thích sản phẩm " +  product.title ,type=1).save()
-    
+    if request.method == 'GET':      
+        content=""  
+        title = "Bạn" +" đã thích sản phẩm " +  product.title 
+        slug=product.slug
+        if len(title)>70:  
+            i=70          
+            while title[i] != " ":
+                i=i-1
+            content=title[:i]+" ..."
+        else:
+            content=title
+
+        Notification(user=user,slug=slug, content =content ,type=1).save()
+
     return redirect('store:home')
+
+
+@login_required
+def add_notifi_like_cp(request):
+    user = request.user
+    product_id = request.GET.get('prod_id')
+    product = get_object_or_404(Product, id=product_id)
+    cate_slug=product.category.slug
+    if request.method == 'GET':      
+        content=""  
+        title = "Bạn" +" đã thích sản phẩm " +  product.title 
+        slug=product.slug
+        if len(title)>70:  
+            i=70          
+            while title[i] != " ":
+                i=i-1
+            content=title[:i]+" ..."
+        else:
+            content=title
+
+        Notification(user=user,slug=slug, content =content ,type=1).save()
+
+    return redirect('store:category-products',cate_slug)
     
 
     

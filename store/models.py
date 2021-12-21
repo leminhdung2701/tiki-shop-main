@@ -33,6 +33,7 @@ class Profile(models.Model):
     user = AutoOneToOneField(User, primary_key=True,on_delete=models.CASCADE)
     phone = models.CharField(max_length=200, null=True)
     profile_pic = models.ImageField(default="avatar/anna.jpg", null=True, blank=True,upload_to='avatar')
+    
 class Product(models.Model):
     title = models.CharField(max_length=150, verbose_name="Tên sản phẩm")
     slug = models.SlugField(max_length=160, verbose_name="Slug sản phẩm")
