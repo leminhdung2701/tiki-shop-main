@@ -228,8 +228,6 @@ def checkout(request):
     return redirect('store:orders')
 
 
-
-
 @login_required
 def add_notifi_like_home(request):
     user = request.user
@@ -272,11 +270,7 @@ def add_notifi_like_cp(request):
 
         Notification(user=user,slug=slug, content =content ,type=1).save()
 
-    return redirect('store:category-products',cate_slug)
-    
-
-    
-
+    return redirect('store:category-products',cate_slug) 
     
 
 @login_required
@@ -284,13 +278,8 @@ def orders(request):
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
     return render(request, 'store/orders.html', {'orders': all_orders})
 
-
-
-
-
 def shop(request):
     return render(request, 'store/shop.html')
-
 
 @login_required
 def checkout_test(request):
