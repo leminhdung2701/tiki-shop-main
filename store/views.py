@@ -159,29 +159,11 @@ def remove_address(request, id):
     messages.success(request, "Address removed.")
     return redirect('store:profile')
 
-@login_required
-def add_to_cart(request):
-    user = request.user
-    product_id = request.GET.get('prod_id')
-    product = get_object_or_404(Product, id=product_id)
-
-    # Check whether the Product is alread in Cart or Not
-    item_already_in_cart = Cart.objects.filter(product=product_id, user=user)
-    if item_already_in_cart:
-        cp = get_object_or_404(Cart, product=product_id, user=user)
-        cp.quantity += 1
-        cp.save()
-    else:
-        Cart(user=user, product=product).save()
-    
-    return redirect('store:cart')
-
 
 @login_required
 def cart(request):
     user = request.user
     cart_products = Cart.objects.filter(user=user)
-
     # Display Total on Cart Page
     amount = decimal.Decimal(0)
     shipping_amount = decimal.Decimal(10)
@@ -191,10 +173,8 @@ def cart(request):
         for p in cp:
             temp_amount = (p.quantity * p.product.price)
             amount += temp_amount
-
     # Customer Addresses
     addresses = Address.objects.filter(user=user)
-
     context = {
         'cart_products': cart_products,
         'amount': amount,
@@ -250,6 +230,35 @@ def checkout(request):
         # And Deleting from Cart
         c.delete()
     return redirect('store:orders')
+
+
+@login_required
+def add_to_cart(request):
+    user = request.user
+    product_id = request.GET.get('prod_id')
+    product = get_object_or_404(Product, id=product_id)
+    # Notification
+    if request.method == 'GET':      
+        content=""  
+        title = "Bạn" +" đã thêm sản phẩm " +  product.title + " vào giỏ hàng."
+        slug=product.slug
+        if len(title)>70:  
+            i=70          
+            while title[i] != " ":
+                i=i-1
+            content=title[:i]+" ..."
+        else:
+            content=title
+        Notification(user=user,slug=slug, content =content ,type=1).save()
+    # Check whether the Product is alread in Cart or Not
+    item_already_in_cart = Cart.objects.filter(product=product_id, user=user)
+    if item_already_in_cart:
+        cp = get_object_or_404(Cart, product=product_id, user=user)
+        cp.quantity += 1
+        cp.save()
+    else:
+        Cart(user=user, product=product).save()    
+    return redirect('store:cart')
 
 
 @login_required
