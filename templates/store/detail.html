@@ -84,6 +84,8 @@
           role="tab" aria-controls="description" aria-selected="true">Mô tả</a></li>
       <li class="nav-item"><a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab"
           aria-controls="reviews" aria-selected="false">Nhận xét</a></li>
+      <li class="nav-item"><a class="nav-link" id="rate-tab" data-toggle="tab" href="#rate" role="tab"
+            aria-controls="reviews" aria-selected="false">Đánh giá</a></li>
     </ul>
     <div class="tab-content mb-5" id="myTabContent">
       <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
@@ -98,7 +100,7 @@
             <div class="col-lg-8">
               <!--display coment-->
               {% if not product.comments.all %}
-              No Comments Yet...
+              Chưa có nhận xét nào ...
 
               {% else %}
               <br /><br>
@@ -125,6 +127,11 @@
               </form>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="tab-pane fade show active" id="rate" role="tabpanel" aria-labelledby="rate-tab">
+        <div class="p-4 p-lg-5 bg-white">
+          Làm gì làm vào đây
         </div>
       </div>
     </div>
