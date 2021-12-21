@@ -61,21 +61,45 @@ def all_categories(request):
     categories = Category.objects.filter(is_active=True)
     return render(request, 'store/categories.html', {'categories':categories})
 
+def price__range(min_price,max_price):
+    
+    product=Product.objects.price < max_price and Product.objects.price > min_price
+
+    return product
 
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(is_active=True, category=category)
+    products = Product.objects.filter(is_active=True, category=category, )
     categories = Category.objects.filter(is_active=True)
     filter_price = request.GET.get('filter_price', '')
-    if filter_price != "":
-        print("lọc")
+    min_price=0
+    max_price=99999999999
+    if filter_price !='':
+        if filter_price == '1':
+                min_price=0
+                max_price=100000
+        if filter_price == '2':
+                min_price=100000
+                max_price=500000
+        if filter_price == '3':
+                min_price=500000
+                max_price=1000000
+        if filter_price == '4':
+                min_price=1000000
+                max_price=5000000
+        if filter_price == '5':
+                min_price=5000000
+                
     else:
-        products = Product.objects.filter(is_active=True, category=category)
+        products = Product.objects.filter(is_active=True, category=category).order_by('-price')
     context = {
         'category': category,
         'products': products,
         'categories': categories,
-        'filter_price': filter_price
+        'filter_price': filter_price,
+        'min_price':min_price,
+        'max_price':max_price,
+        
     }
     return render(request, 'store/category_products.html', context)
 

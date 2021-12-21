@@ -129,7 +129,7 @@
 
             {% if products %}
             {% for product in products %}
-
+            {% if product.price < max_price and product.price > min_price %}
             <!-- PRODUCT-->
             <div class="col-lg-4 col-sm-6">
               <div class="product text-center">
@@ -171,7 +171,7 @@
                 <p class="small text-muted">{{product.price}} đ</p>
               </div>
             </div>
-
+            {% endif %}
             {% endfor %}
             {% endif %}
 
