@@ -105,7 +105,30 @@
                 <td>{{forloop.counter}}</td>
                 <td>{{order.product.title}}</td>
                 <td>
-                  {{order.status}}
+                  {% if order.status == 'Pending' %}                  
+                  Đang xử lý
+                  {% endif %}
+                  
+                  {% if order.status == 'Accepted' %}                  
+                  Đã xác nhận
+                  {% endif %}
+                  
+                  {% if order.status == 'Packed' %}                 
+                  Đã đóng gói
+                  {% endif %}
+                  
+                  
+                  {% if order.status == 'On The Way' %}                 
+                  Đã vận chuyển
+                  {% endif %}
+                  
+                  {% if order.status == 'Delivered' %}                  
+                  Đã giao hàng
+                  {% endif %}
+                  
+                  {% if order.status == 'Cancelled' %}                  
+                  Đã huỷ
+                  {% endif %}
                 </td>
               </tr>
               {% endfor %}
