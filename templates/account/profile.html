@@ -4,30 +4,50 @@
 {% block content %}
 <style>
   .profile-pic {
-    max-width: 200px;
-    max-height: 200px;
-    margin: 0 auto;
+    max-width: 150px;
+    max-height: 150px;
+    margin: 10 auto;
     border-radius: 50%;
-  }
+    object-fit: cover;
+    display: block;
+    background-size:cover;
+    background-repeat:no-repeat;
+}
 </style>
 <div class="container py-5">
   {% include 'partials/_messages.html' %}
 
   <div class="jumbotron">
+    
     <h1>{{request.user.first_name}} {{request.user.last_name}}</h1>
-    <img class="profile-pic" src="{{request.user.profile.profile_pic.url}}">
-    <p><strong>Email:</strong> {{request.user.email}}</p>
     <p><strong>Tên tài khoản:</strong> {{request.user.username}}</p>
-    <div class="col-md-9">
-      <div class="card card-body">
+    <p><strong>Email:</strong> {{request.user.email}}</p>
 
-        <form method="POST" action="" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{form.as_p}}
-
-          <input class="btn btn-primary" type="submit" name="Update Information">
-        </form>
+    <img style="margin-bottom: 10px; margin-left: 20px;" class="profile-pic" src="{{request.user.profile.profile_pic.url}}">
+    
+    <div class="form-group">
+      <div class="custom-control custom-checkbox">
+        <input class="custom-control-input" id="alternateAddressCheckbox" type="checkbox">
+        <label class="custom-control-label text-small" for="alternateAddressCheckbox">Sửa thông tin cá nhân</label>
       </div>
+    </div>
+    <div class="col-lg-12" style="margin-bottom: 20px;">
+      <div class="row d-none" id="alternateAddress">
+        <div class="col-md-9">
+          <div class="card card-body">
+        
+            <form method="POST" action="" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.as_p}}
+              <button type="submit" name="Update Information"
+                class="btn btn-primary">Xác nhận</button>
+            </form>
+          </div>
+      </div>
+    </div>
+    
+    
+    
     </div>
     <p><a class="btn btn-primary btn-large" href="{% url 'store:add-address' %}">Thêm địa chỉ »</a> <a
         class="btn btn-outline-primary btn-large" href="#">Đơn hàng của bạn »</a></p>

@@ -30,9 +30,9 @@ class Category(models.Model):
         return self.title
 
 class Profile(models.Model):
-    user = AutoOneToOneField(User, primary_key=True,on_delete=models.CASCADE)
-    phone = models.CharField(max_length=200, null=True)
-    profile_pic = models.ImageField(default="avatar/anna.jpg", null=True, blank=True,upload_to='avatar')
+    user = AutoOneToOneField(User, primary_key=True,on_delete=models.CASCADE, verbose_name="Tên tài khoản")
+    phone = models.CharField(max_length=200, null=True, verbose_name="Số điện thoại")
+    profile_pic = models.ImageField(default="img/default-avatar.png", null=True, blank=True,upload_to='avatar', verbose_name="Ảnh đại diện")
     
 class Product(models.Model):
     title = models.CharField(max_length=150, verbose_name="Tên sản phẩm")
@@ -110,5 +110,5 @@ class Order(models.Model):
         choices=STATUS_CHOICES,
         verbose_name="Trạng thái",
         max_length=50,
-        default="Đang xử lý"
+        default="Pending"
         )

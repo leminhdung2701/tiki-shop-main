@@ -21,7 +21,7 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
         labels = {'username':'Tên tài khoản','email': 'Email'}
-        widgets = {'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Username'})}
+        widgets = {'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Tên tài khoản'})}
 
 
 class LoginForm(AuthenticationForm):
@@ -62,6 +62,8 @@ class CommentForm(forms.ModelForm):
         fields = ['content']
         
 class ProfileForm(forms.ModelForm):
+    
+
 	class Meta:
 		model = Profile
 		fields = '__all__'
