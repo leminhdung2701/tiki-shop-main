@@ -135,13 +135,15 @@
               </form>
             </div>
           </div>
+          
         </div>
       </div>
-      <div class="tab-pane fade show active" id="rate" role="tabpanel" aria-labelledby="rate-tab">
+       <!--end display coment-->
+      <div class="tab-pane fade " id="rate" role="tabpanel" aria-labelledby="rate-tab">
         <div class="p-4 p-lg-5 bg-white">
           <div class="row">
             <div class="col-lg-8">
-              <!--display coment-->
+              <!--display review-->
               {% if not product.reviews.all %}
               Chưa có đánh giá nào
 
@@ -169,7 +171,6 @@
                 {% csrf_token %}
                 {{ form1.as_p }}
                 <button class="btn btn-primary btn-block " type="submit">Hoàn tất</button>
-
               </form>
             </div>
           </div>

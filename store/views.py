@@ -35,6 +35,14 @@ def detail(request, slug):
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
     form = CommentForm(instance=product)
     form1 =  RatingForm(instance=product)
+    avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
+    context = {
+        'form': form,
+        'form1': form1,
+        'product': product,
+        'related_products': related_products,
+        'avg':avg,
+    }
     # avg= product.productReview_set.aggregate(Avg('review_rating')).values()[0]
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=product)
@@ -56,14 +64,7 @@ def detail(request, slug):
     else:
         form = CommentForm()    
         form1 = RatingForm()
-    avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
-    context = {
-        'form': form,
-        'form1': form1,
-        'product': product,
-        'related_products': related_products,
-        'avg':avg,
-    }
+
     return render(request, 'store/detail.html', context)
 
 
