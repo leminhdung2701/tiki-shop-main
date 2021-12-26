@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from annoying.fields import AutoOneToOneField
+from django.db.models import Avg
+from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 class Address(models.Model):
     user = models.ForeignKey(User, verbose_name="Tên người dùng", on_delete=models.CASCADE)
@@ -32,7 +34,7 @@ class Category(models.Model):
 class Profile(models.Model):
     user = AutoOneToOneField(User, primary_key=True,on_delete=models.CASCADE, verbose_name="Tên tài khoản")
     phone = models.CharField(max_length=200, null=True, verbose_name="Số điện thoại")
-    profile_pic = models.ImageField(default="img/default-avatar.png", null=True, blank=True,upload_to='avatar', verbose_name="Ảnh đại diện")
+    profile_pic = models.ImageField(default="avatar/anna.jpg", null=True, blank=True,upload_to='avatar', verbose_name="Ảnh đại diện")
     
 class Product(models.Model):
     title = models.CharField(max_length=150, verbose_name="Tên sản phẩm")
@@ -112,3 +114,21 @@ class Order(models.Model):
         max_length=50,
         default="Pending"
         )
+RATING=(
+    (1,'1'),
+    (2,'2'),
+    (3,'3'),
+    (4,'4'),
+    (5,'5'),
+)
+class ProductReview(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,related_name="reviews",on_delete=models.CASCADE)
+    review_text=models.TextField()
+    review_rating=models.CharField(choices=RATING,max_length=150)
+
+    class Meta:
+        verbose_name_plural='Reviews'
+
+    def get_review_rating(self):
+        return self.review_rating

@@ -28,11 +28,7 @@
       <!-- PRODUCT DETAILS-->
       <div class="col-lg-6">
         <ul class="list-inline mb-2">
-          <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-          <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-          <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-          <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
-          <li class="list-inline-item m-0"><i class="fas fa-star small text-warning"></i></li>
+         
         </ul>
         <h1>{{product.title}}</h1>
         <p class="text-muted lead">{{product.price}} đ</p>
@@ -70,6 +66,18 @@
         <ul class="list-unstyled small d-inline-block">
           <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">Mã SP:</strong><span
               class="ml-2 text-muted">{{product.sku}}</span></li>
+              <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">Đánh giá:</strong><span
+                class="ml-2 text-muted">
+                {% if avg.review_rating__avg %}
+                 {% for star in avg.review_rating__avg|ljust:avg.review_rating__avg %}
+                <i class="fa fa-star text-warning"></i>
+              {% endfor %}
+              {% endif %}
+              {% if not avg.review_rating__avg %}
+              <span
+              class="ml-2 text-muted">Chưa có đánh giá</span>
+              {% endif %}
+            </span></li>
           <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Danh mục:</strong><a
               class="reset-anchor ml-2"
               href="{% url 'store:category-products' product.category.slug %}">{{product.category}}</a></li>
@@ -131,7 +139,40 @@
       </div>
       <div class="tab-pane fade show active" id="rate" role="tabpanel" aria-labelledby="rate-tab">
         <div class="p-4 p-lg-5 bg-white">
-          Làm gì làm vào đây
+          <div class="row">
+            <div class="col-lg-8">
+              <!--display coment-->
+              {% if not product.reviews.all %}
+              Chưa có đánh giá nào
+
+              {% else %}
+              <br /><br>
+              {% for review in product.reviews.all %}
+              <div class="media mb-3"><img class="rounded-circle" src="{{review.user.profile.profile_pic.url}}" alt=""
+                  width="50">
+                <div class="media-body ml-3">
+                  <h6 class="mb-0 text">{{review.user.username }}</h6>
+                  <p class="text mb-0 text-muted">{{review.review_text}}</p>
+                  {% for star in review.review_rating|ljust:review.review_rating %}
+						  		<i class="fa fa-star text-warning"></i>
+								{% endfor %}
+
+                </div>
+              </div>
+              <br /><br>
+              {% endfor %}
+              {% endif %}
+
+            </div>
+            <div class="col-lg-12">
+              <form action="" method="post">
+                {% csrf_token %}
+                {{ form1.as_p }}
+                <button class="btn btn-primary btn-block " type="submit">Hoàn tất</button>
+
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

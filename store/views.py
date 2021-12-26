@@ -1,8 +1,8 @@
 import django
 from django.contrib.auth.models import User
-from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile
+from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile,ProductReview
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import RegistrationForm, AddressForm,CommentForm,ProfileForm
+from .forms import RegistrationForm, AddressForm,CommentForm,ProfileForm,RatingForm
 from django.contrib import messages
 from django.views import View
 import decimal
@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator # for Class Based Views
 from django.db.models import Q
 from django.views.generic import ListView
 from datetime import datetime
+from django.db.models import Avg
 # Create your views here.
 
 def home(request):
@@ -33,27 +34,36 @@ def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
     form = CommentForm(instance=product)
-    context = {
-        'form': form,
-        'product': product,
-        'related_products': related_products,
-
-    }
-
+    form1 =  RatingForm(instance=product)
+    # avg= product.productReview_set.aggregate(Avg('review_rating')).values()[0]
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=product)
+        form1 = RatingForm(request.POST, instance=product)
         if form.is_valid():
             name = request.user.username
             user = request.user
             body = form.cleaned_data['content']
             c = Comment(product=product,user = user, commenter_name=name, comment_body=body, date_added=datetime.now())
             c.save()          
+        elif form1.is_valid():
+            user = request.user
+            review_text = form1.cleaned_data['review_text']
+            review_rating = form1.cleaned_data['review_rating']
+            c = ProductReview(user = user,product=product,review_text=review_text,review_rating=review_rating)
+            c.save()  
         else:
-            print('form is invalid')    
+            print('form is invalid')
     else:
         form = CommentForm()    
-
-   
+        form1 = RatingForm()
+    avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
+    context = {
+        'form': form,
+        'form1': form1,
+        'product': product,
+        'related_products': related_products,
+        'avg':avg,
+    }
     return render(request, 'store/detail.html', context)
 
 

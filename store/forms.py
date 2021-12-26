@@ -9,7 +9,7 @@ from django.db.models import fields
 from django.forms import widgets
 from django.forms.fields import CharField
 from django.utils.translation import gettext, gettext_lazy as _
-from . models import Product, Comment,Profile
+from . models import Product, Comment,Profile,ProductReview
 
 
 class RegistrationForm(UserCreationForm):
@@ -62,9 +62,17 @@ class CommentForm(forms.ModelForm):
         fields = ['content']
         
 class ProfileForm(forms.ModelForm):
-    
-
 	class Meta:
 		model = Profile
 		fields = '__all__'
 		exclude = ['user']
+class RatingForm(forms.ModelForm):
+    review_text = forms.CharField(label=_("Đánh giá sản phẩm"),widget=forms.Textarea(attrs={
+        'class': 'md-textarea form-control',
+        'placeholder': 'đánh giá ở đây ...',
+        'rows': '4',
+    }))
+    class Meta:
+        model = ProductReview
+        fields=('review_text','review_rating')
+   
