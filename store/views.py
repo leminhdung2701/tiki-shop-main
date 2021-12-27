@@ -83,9 +83,11 @@ def category_products(request, slug):
     products = Product.objects.filter(is_active=True, category=category, )
     categories = Category.objects.filter(is_active=True)
     filter_price = request.GET.get('filter_price', '')
+    sorting=request.GET.get('sort_product', '')
     min_price=0
     max_price=99999999999
     if filter_price !='':
+        
         if filter_price == '1':
                 min_price=0
                 max_price=100000
@@ -103,6 +105,7 @@ def category_products(request, slug):
                 
     else:
         products = Product.objects.filter(is_active=True, category=category).order_by('-price')
+    
     context = {
         'category': category,
         'products': products,
@@ -111,8 +114,42 @@ def category_products(request, slug):
         'min_price':min_price,
         'max_price':max_price,
         
-    }
+        }
+    if sorting != '':
+        context = {
+        'category': category,
+        'products': products,
+        'categories': categories,
+        'sorting':sorting,
+        }
+        if sorting=="low-high":
+            products = Product.objects.filter(is_active=True, category=category).order_by('-price')
+            return render(request, 'store/category_products.html', context)
+        if sorting=="high-low":
+            products = Product.objects.filter(is_active=True, category=category).order_by('-price').reverse
+            return render(request, 'store/category_products.html', context)
     return render(request, 'store/category_products.html', context)
+
+# def sort_products (request, slug):
+#     category = get_object_or_404(Category, slug=slug)
+#     products = Product.objects.filter(is_active=True, category=category, )
+#     categories = Category.objects.filter(is_active=True)
+#     sorting=request.GET.get('sort_product', '')
+    
+#     if sorting != '':
+#         if sorting=="low-high":
+#             products = Product.objects.filter(is_active=True, category=category).order_by('-price')
+#         if sorting=="high-low":
+#             products = Product.objects.filter(is_active=True, category=category).order_by('-price').reverse
+#     print(sorting)
+#     context = {
+#         'category': category,
+#         'products': products,
+#         'categories': categories,
+#         'sorting':sorting,
+        
+#     }
+#     return render(request, 'store/category_products.html', context)
 
 
 # Authentication Starts Here
