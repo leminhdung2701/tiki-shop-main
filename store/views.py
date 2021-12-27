@@ -58,9 +58,9 @@ def detail(request, slug):
             review_text = form1.cleaned_data['review_text']
             review_rating = form1.cleaned_data['review_rating']
             c = ProductReview(user = user,product=product,review_text=review_text,review_rating=review_rating)
-            c.save()  
-        else:
-            print('form is invalid')
+            c.save()
+        avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
+        context['avg']=avg
     else:
         form = CommentForm()    
         form1 = RatingForm()

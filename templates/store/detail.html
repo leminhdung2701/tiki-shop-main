@@ -69,9 +69,11 @@
               <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">Đánh giá:</strong><span
                 class="ml-2 text-muted">
                 {% if avg.review_rating__avg %}
-                 {% for star in avg.review_rating__avg|ljust:avg.review_rating__avg %}
+                {% with my_var=avg.review_rating__avg|floatformat:0 %}
+                 {% for star in my_var|ljust:my_var %}
                 <i class="fa fa-star text-warning"></i>
-              {% endfor %}
+                {% endfor %}
+                {% endwith %}
               {% endif %}
               {% if not avg.review_rating__avg %}
               <span
