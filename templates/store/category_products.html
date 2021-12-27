@@ -103,11 +103,9 @@
         <!-- SHOP LISTING-->
         <div class="col-lg-9 order-1 order-lg-2 mb-5 mb-lg-0">
           <div class="row mb-3 align-items-center">
-            {% if count %}
             <div class="col-lg-6 mb-2 mb-lg-0">
-              <p class="text-small text-muted mb-0">Có tất cả {{count}} sản phẩm</p>
+              <p class="text-small text-muted mb-0">Có tất cả {{products|length}} sản phẩm</p>
             </div>
-            {% endif %}
             <div class="col-lg-6"> 
               <form action="" method="get">
               <ul class="list-inline d-flex align-items-center justify-content-lg-end mb-0">
@@ -139,7 +137,7 @@
 
             {% if products %}
             {% for product in products %}
-            {% if product.price < max_price and product.price > min_price %}
+        
             <!-- PRODUCT-->
             <div class="col-lg-4 col-sm-6">
               <div class="product text-center">
@@ -181,7 +179,6 @@
                 <p class="small text-muted">{{product.price}} đ</p>
               </div>
             </div>
-            {% endif %}
             {% endfor %}
             {% endif %}
 

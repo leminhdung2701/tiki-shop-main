@@ -104,17 +104,14 @@ def category_products(request, slug):
         if filter_price == '5':
                 min_price=5000000
                 
-    else:
-        products = Product.objects.filter(is_active=True, category=category).order_by('-price')
+
+    products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
     
     context = {
         'category': category,
         'products': products,
         'categories': categories,
         'filter_price': filter_price,
-        'min_price':min_price,
-        'max_price':max_price,
-        'count':count,
         }
     if sorting != '':
         context = {
@@ -124,10 +121,10 @@ def category_products(request, slug):
         'sorting':sorting,
         }
         if sorting=="low-high":
-            products = Product.objects.filter(is_active=True, category=category).order_by('-price')
+            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
             return render(request, 'store/category_products.html', context)
         if sorting=="high-low":
-            products = Product.objects.filter(is_active=True, category=category).order_by('-price').reverse
+            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price').reverse
             return render(request, 'store/category_products.html', context)
     return render(request, 'store/category_products.html', context)
 
