@@ -81,6 +81,7 @@ def price__range(min_price,max_price):
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(is_active=True, category=category, )
+    count =len(products)
     categories = Category.objects.filter(is_active=True)
     filter_price = request.GET.get('filter_price', '')
     sorting=request.GET.get('sort_product', '')
@@ -113,7 +114,7 @@ def category_products(request, slug):
         'filter_price': filter_price,
         'min_price':min_price,
         'max_price':max_price,
-        
+        'count':count,
         }
     if sorting != '':
         context = {

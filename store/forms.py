@@ -66,6 +66,7 @@ class ProfileForm(forms.ModelForm):
 		model = Profile
 		fields = '__all__'
 		exclude = ['user']
+
 class RatingForm(forms.ModelForm):
     review_text = forms.CharField(label=_("Đánh giá sản phẩm"),widget=forms.Textarea(attrs={
         'class': 'md-textarea form-control',

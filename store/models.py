@@ -125,7 +125,7 @@ class ProductReview(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     product=models.ForeignKey(Product,related_name="reviews",on_delete=models.CASCADE)
     review_text=models.TextField()
-    review_rating=models.CharField(choices=RATING,max_length=150)
+    review_rating=models.CharField(choices=RATING,verbose_name="Xếp hạng",max_length=150)
 
     class Meta:
         verbose_name_plural='Reviews'
