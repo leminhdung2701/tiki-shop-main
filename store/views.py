@@ -57,8 +57,14 @@ def detail(request, slug):
             user = request.user
             review_text = form1.cleaned_data['review_text']
             review_rating = form1.cleaned_data['review_rating']
-            c = ProductReview(user = user,product=product,review_text=review_text,review_rating=review_rating)
-            c.save()
+            if(ProductReview.objects.filter(user=user).exists()):
+                c =  ProductReview.objects.get(user =user,product=product)
+                c.review_text=review_text
+                c.review_rating = review_rating
+                c.save()
+            else:
+                c = ProductReview(user = user,product=product,review_text=review_text,review_rating=review_rating)
+                c.save()
         avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
         context['avg']=avg
     else:
