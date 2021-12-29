@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="container">
+<div style="margin: 20px; margin-bottom: 300px; "class=" align-items-center">
 
+        <div style="margin: 10px; " class="" >
+            <p class="text-small text-center text-muted"> Có tất cả {{all_search_results|length}} sản phẩm</p>
+        </div>
+    {% for product in all_search_results %}   
+        
 
-    {% for product in all_search_results %}
         <div class="row justify-content-center mt-3">
-            <div class="col-md-5 col-sm-12 border-bottom position-relative">
-                <p><a style="text-decoration: none;" class="text-primary" >{{ product.title }}</a></p>
-                <p>{{ product.slug }}</p>
-                <p>{{ product.price }}</p>
-            </div>
+                <div   class="col-md-1 col-sm-12 border-bottom position-relative" style="margin: right 50px;" >
+                    <a  class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                        <img  style='height: 100px; width: 100px'  src="{{ product.product_image.url }}" alt="{{product.title}}">
+                    </a>    
+                </div>
+                
+                <div   class="col-md-5 col-sm-12 border-bottom position-relative">  
+                    <p>{{ product.category.title }} </p>
+                    <p>{{ product.title }}</p>                     
+                    <p>{{ product.price }} đ</p>
+                </div>
         </div>
     {% endfor %}
 </div>
