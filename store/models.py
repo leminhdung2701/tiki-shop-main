@@ -43,7 +43,7 @@ class Product(models.Model):
     short_description = models.TextField(verbose_name="Miêu tả ngắn")
     detail_description = models.TextField(blank=True, null=True, verbose_name="Miêu tả chi tiết")
     product_image = models.ImageField(upload_to='product', blank=True, null=True, verbose_name="Hình ảnh sản phẩm")
-    price = models.DecimalField(max_digits=8, decimal_places=2,verbose_name="Giá")
+    price = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Giá")
     category = models.ForeignKey(Category, verbose_name="Danh mục sản phẩm", on_delete=models.CASCADE)
     is_active = models.BooleanField(verbose_name="Có hoạt động?")
     is_featured = models.BooleanField(verbose_name="Có đề xuất?")
