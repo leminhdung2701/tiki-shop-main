@@ -49,7 +49,7 @@ class Product(models.Model):
     is_featured = models.BooleanField(verbose_name="Có đề xuất?")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian tạo")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Cập nhật")
-
+    count = models.IntegerField(default=0)
     class Meta:
         verbose_name_plural = 'Products'
         ordering = ('-created_at', )

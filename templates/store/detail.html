@@ -126,8 +126,8 @@
               <br /><br>
               {% endfor %}
               {% endif %}
-
             </div>
+            {% if user.is_authenticated %}
             <div class="col-lg-12">
               <form action="" method="post">
                 {% csrf_token %}
@@ -136,10 +136,11 @@
 
               </form>
             </div>
+            {% endif %}
           </div>
-          
         </div>
       </div>
+  
        <!--end display coment-->
       <div class="tab-pane fade " id="rate" role="tabpanel" aria-labelledby="rate-tab">
         <div class="p-4 p-lg-5 bg-white">
@@ -168,6 +169,7 @@
               {% endif %}
 
             </div>
+            {% if user.is_authenticated %}
             <div class="col-lg-12">
               <form action="" method="post">
                 {% csrf_token %}
@@ -175,6 +177,7 @@
                 <button class="btn btn-primary btn-block " type="submit">Hoàn tất</button>
               </form>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>
