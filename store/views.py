@@ -8,7 +8,7 @@ from django.views import View
 import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
-from django.db.models import Q
+from django.db.models import Q,F
 from django.views.generic import ListView
 from datetime import datetime
 from django.db.models import Avg
@@ -17,12 +17,14 @@ from django.db.models import Avg
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:4]
     products = Product.objects.filter(is_active=True, is_featured=True)[:8]
+    products_popular = Product.objects.all().order_by('-count')[:8]
     all_categories = Category.objects.all()
     all_products = Product.objects.all()     
    
     context = {
         'categories': categories,
         'products': products,
+        'products_popular':products_popular,
         'all_categories': all_categories,
         'all_products': all_products,
     }
@@ -32,6 +34,7 @@ def home(request):
 
 def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
+    Product.objects.filter(slug=slug).update(count = F('count')+1)  #count view +1
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
     form = CommentForm(instance=product)
     form1 =  RatingForm(instance=product)
@@ -87,9 +90,10 @@ def price__range(min_price,max_price):
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(is_active=True, category=category, )
+    count =len(products)
     categories = Category.objects.filter(is_active=True)
     filter_price = request.GET.get('filter_price', '')
-    sorting = request.GET.get('sorting', '')
+    sorting=request.GET.get('sort_product', '')
     min_price=0
     max_price=99999999999
     if filter_price !='':
@@ -108,45 +112,54 @@ def category_products(request, slug):
                 max_price=5000000
         if filter_price == '5':
                 min_price=5000000
+                
 
-        products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
-        context = {
-            'category': category,
-            'products': products,
-            'categories': categories,
-            'filter_price': filter_price,
-        }   
-        return render(request, 'store/category_products.html', context)   
-      
+    products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
     
-    
-    
-    if sorting != '':        
-        if sorting == "high-low":
-            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
-        if sorting == "low-high":
-            products = reversed(list(Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')))
-        if sorting == "popularity":
-            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
-
-
-        context = {
-            'category': category,
-            'products': products,
-            'categories': categories,
-            'sorting':sorting,
-        }
-        return render(request, 'store/category_products.html', context)
-
-
     context = {
         'category': category,
         'products': products,
         'categories': categories,
-    }   
-
+        'filter_price': filter_price,
+        }
+    if sorting != '':
+        context = {
+        'category': category,
+        'products': products,
+        'categories': categories,
+        'sorting':sorting,
+        }
+        if sorting=="low-high":
+            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
+            return render(request, 'store/category_products.html', context)
+        if sorting=="high-low":
+            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price').reverse
+            return render(request, 'store/category_products.html', context)
     return render(request, 'store/category_products.html', context)
 
+# def sort_products (request, slug):
+#     category = get_object_or_404(Category, slug=slug)
+#     products = Product.objects.filter(is_active=True, category=category, )
+#     categories = Category.objects.filter(is_active=True)
+#     sorting=request.GET.get('sort_product', '')
+    
+#     if sorting != '':
+#         if sorting=="low-high":
+#             products = Product.objects.filter(is_active=True, category=category).order_by('-price')
+#         if sorting=="high-low":
+#             products = Product.objects.filter(is_active=True, category=category).order_by('-price').reverse
+#     print(sorting)
+#     context = {
+#         'category': category,
+#         'products': products,
+#         'categories': categories,
+#         'sorting':sorting,
+        
+#     }
+#     return render(request, 'store/category_products.html', context)
+
+
+# Authentication Starts Here
 
 class RegistrationView(View):
     def get(self, request):
