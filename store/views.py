@@ -134,29 +134,6 @@ def category_products(request, slug):
             return render(request, 'store/category_products.html', context)
     return render(request, 'store/category_products.html', context)
 
-# def sort_products (request, slug):
-#     category = get_object_or_404(Category, slug=slug)
-#     products = Product.objects.filter(is_active=True, category=category, )
-#     categories = Category.objects.filter(is_active=True)
-#     sorting=request.GET.get('sort_product', '')
-    
-#     if sorting != '':
-#         if sorting=="low-high":
-#             products = Product.objects.filter(is_active=True, category=category).order_by('-price')
-#         if sorting=="high-low":
-#             products = Product.objects.filter(is_active=True, category=category).order_by('-price').reverse
-#     print(sorting)
-#     context = {
-#         'category': category,
-#         'products': products,
-#         'categories': categories,
-#         'sorting':sorting,
-        
-#     }
-#     return render(request, 'store/category_products.html', context)
-
-
-# Authentication Starts Here
 
 class RegistrationView(View):
     def get(self, request):
