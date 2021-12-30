@@ -127,7 +127,9 @@ def category_products(request, slug):
         if sorting == "low-high":
             products = reversed(list(Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')))
         if sorting == "popularity":
-            products == []
+            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
+
+
         context = {
             'category': category,
             'products': products,
