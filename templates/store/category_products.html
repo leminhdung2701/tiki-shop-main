@@ -130,6 +130,11 @@
 
               </ul>   
               </form>
+              <!-- <script>
+                const filter_price = `customCheck{{ filter_price }}`
+                const a = document.getElementById(filter_price)
+                a.setAttribute('checked','')
+              </script> -->
             </div>
           </div>
 
@@ -147,7 +152,7 @@
 
                   <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
                     {% if product.product_image %}
-                    <img class="img-fluid w-100" src="{{product.product_image.url}}" alt="{{product.title}}">
+                    <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{{product.product_image.url}}" alt="{{product.title}}">
                     {% else %}
                     <img class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{product.title}}">
                     {% endif %}
@@ -184,6 +189,7 @@
 
 
           </div>
+
           <!-- PAGINATION-->
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center justify-content-lg-end">
