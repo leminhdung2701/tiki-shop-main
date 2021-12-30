@@ -101,15 +101,15 @@ def category_products(request, slug):
                 max_price=100000
         if filter_price == '2':
                 min_price=100000
-                max_price=500000
+                max_price=200000
         if filter_price == '3':
-                min_price=500000
-                max_price=1000000
+                min_price=200000
+                max_price=400000
         if filter_price == '4':
-                min_price=1000000
-                max_price=5000000
+                min_price=400000
+                max_price=1000000
         if filter_price == '5':
-                min_price=5000000
+                min_price=1000000
 
         products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
         context = {
