@@ -15,7 +15,7 @@ def notification_list(request):
         notification = Notification.objects.filter(user=user)
         if len(notification)>=6:
             result = reversed(list(notification[len(notification)-6:len(notification)]))
-            res=result
+            res = result
         else:
             res=reversed(list(notification))
         context = {
