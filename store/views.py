@@ -15,7 +15,7 @@ from django.db.models import Avg
 # Create your views here.
 
 def home(request):
-    categories = Category.objects.filter(is_active=True, is_featured=True)[:4]
+    categories = Category.objects.filter(is_active=True, is_featured=True).order_by('-count')[:4]
     products = Product.objects.filter(is_active=True, is_featured=True)[:8]
     products_popular = Product.objects.all().order_by('-count')[:8]
     all_categories = Category.objects.all()
@@ -34,7 +34,8 @@ def home(request):
 
 def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    Product.objects.filter(slug=slug).update(count = F('count')+1)  #count view +1
+    Product.objects.filter(slug=slug).update(count = F('count')+1)  # category count view +1
+    Category.objects.filter(title=product.category.title).update(count = F('count')+1) #categor count view +1
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
     form = CommentForm(instance=product)
     form1 =  RatingForm(instance=product)
