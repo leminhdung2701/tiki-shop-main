@@ -80,14 +80,14 @@
         <div class="col-lg-9 order-1 order-lg-2 mb-5 mb-lg-0">
           <div class="row mb-3 align-items-center">
             <div class="col-lg-6 mb-2 mb-lg-0">
-              <p class="text-small text-muted mb-0">Có tất cả {{products|length}} sản phẩm</p>
+              <p class="text-small text-muted mb-0">Có tất cả {{all|length}} sản phẩm</p>
             </div>
             <div class="col-lg-6"> 
               <form action="" method="get">
               <ul class="list-inline d-flex align-items-center justify-content-lg-end mb-0">
                 
-                <li class="list-inline-item text-muted mr-3"><a class="reset-anchor p-0" href="#"><i
-                      class="fas fa-th-large"></i></a></li>
+                <!-- <li class="list-inline-item text-muted mr-3"><a class="reset-anchor p-0" href="#"><i
+                      class="fas fa-th-large"></i></a></li> -->
                 <li class="list-inline-item text-muted mr-3"><a class="reset-anchor p-0" href="#"><i
                       class="fas fa-th"></i></a></li>
                 
@@ -111,69 +111,95 @@
           </div>
 
           <div class="row">
-
             {% if products %}
-            {% for product in products %}
-        
-            <!-- PRODUCT-->
-            <div class="col-lg-4 col-sm-6">
-              <div class="product text-center">
-                <div class="mb-3 position-relative">
+            {% for product in products %}        
+              <!-- PRODUCT-->
+              <div class="col-lg-4 col-sm-6">
+                <div class="product text-center">
+                  <div class="mb-3 position-relative">
+                    <div class="badge text-white badge-"></div>
+                    <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                      {% if product.product_image %}
+                      <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{{product.product_image.url}}" alt="{{product.title}}">
+                      {% else %}
+                      <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{product.title}}">
+                      {% endif %}
+                    </a>
 
-                  <div class="badge text-white badge-"></div>
+                    <div class="product-overlay">
+                      <ul class="mb-0 list-inline">
+                        <li class="list-inline-item m-0 p-0">
+                          {% comment %}<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a>{% endcomment %}
+                          <form action="{% url 'store:add-notifi-like-cp'  %}">
+                            <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                            <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart"></i></button>
+                          </form>
+                        <li class="list-inline-item m-0 p-0">
+                          {% comment %} <a class="btn btn-sm btn-dark" href="{% url 'store:add-to-cart' %}">Thêm vào
+                            giỏ</a> {% endcomment %}
 
-                  <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
-                    {% if product.product_image %}
-                    <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{{product.product_image.url}}" alt="{{product.title}}">
-                    {% else %}
-                    <img class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{product.title}}">
-                    {% endif %}
-                  </a>
+                          <form action="{% url 'store:add-to-cart' %}">
+                            <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                            <button type="submit" class="btn btn-sm btn-dark">Thêm vào giỏ</button>
+                          </form>
 
-                  <div class="product-overlay">
-                    <ul class="mb-0 list-inline">
-                      <li class="list-inline-item m-0 p-0">
-                        {% comment %}<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a>{% endcomment %}
-                        <form action="{% url 'store:add-notifi-like-cp'  %}">
-                          <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
-                          <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart"></i></button>
-                        </form>
-                      <li class="list-inline-item m-0 p-0">
-                        {% comment %} <a class="btn btn-sm btn-dark" href="{% url 'store:add-to-cart' %}">Thêm vào
-                          giỏ</a> {% endcomment %}
-
-                        <form action="{% url 'store:add-to-cart' %}">
-                          <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
-                          <button type="submit" class="btn btn-sm btn-dark">Thêm vào giỏ</button>
-                        </form>
-
-                      </li>
-                    </ul>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+                  <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{product.title}}</a>
+                  </h6>
+                  <p class="small text-muted">{{product.price}} đ</p>
                 </div>
-                <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{product.title}}</a>
-                </h6>
-                <p class="small text-muted">{{product.price}} đ</p>
               </div>
-            </div>
             {% endfor %}
             {% endif %}
-
-
           </div>
-
           <!-- PAGINATION-->
-          <nav style="position:absolute;bottom:0; right: 0; margin-top: 10px;" aria-label="Page navigation example">
+          {% if type > 0 %}
+            {% if products|length > 0 %}          
+            <!-- <nav style="margin-top: 10px;" aria-label="Page navigation example">
+              <ul class="pagination justify-content-center justify-content-lg-end">
+                <li class="page-item"><a id="btn_prev" class="page-link" href="#" aria-label="Previous"><span
+                      aria-hidden="true">«</span></a></li>
+                <li class="page-item active"><a id="page" class="page-link" href="#">1</a></li>
+                <li class="page-item"><a id="page" class="page-link" href="#">2</a></li>
+                <li class="page-item"><a id="page" class="page-link" href="#">3</a></li>
+                <li class="page-item"><a id="btn_next" class="page-link" href="#" aria-label="Next"><span
+                      aria-hidden="true">»</span></a></li>
+              </ul>
+            </nav> -->
+            {% else %}
+            <nav style="position:absolute; top: 780px; bottom:0; right: 0;  " aria-label="Page navigation example">
+              <ul class="pagination justify-content-center justify-content-lg-end">
+                <li class="page-item"><a id="btn_prev" class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                <li class="page-item active"><a id="page" class="page-link" href="#">1</a></li>
+                <li class="page-item"><a id="page" class="page-link" href="#">2</a></li>
+                <li class="page-item"><a id="page" class="page-link" href="#">3</a></li>
+                <li class="page-item"><a id="btn_next"class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+              </ul>
+            </nav>                    
+            {% endif %}
+          {% else %}         
+          <nav style="margin-top: 10px;" aria-label="Page navigation example">
             <ul class="pagination justify-content-center justify-content-lg-end">
-              <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span
-                    aria-hidden="true">«</span></a></li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span
-                    aria-hidden="true">»</span></a></li>
+              {%if products.has_previous %}
+              <li class="page-item"><a id="btn_prev" class="page-link"
+                  href="{% url 'store:category-products' category.slug %}?page={{products.previous_page_number}}"
+                  aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+              {% endif %}
+              <li class="page-item active"><a id="page" class="page-link" href="#">{{products.number}}</a></li>
+              <!-- <li class="page-item"><a id="page" class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a id="page" class="page-link" href="#">3</a></li> -->
+              {%if products.has_next %}
+              <li class="page-item"><a id="btn_next" class="page-link"
+                  href="{% url 'store:category-products' category.slug %}?page={{products.next_page_number}}"
+                  aria-label="Next"><span aria-hidden="true">»</span></a></li>
+              {% endif %}
             </ul>
           </nav>
+          {% endif %}
+          
         </div>
       </div>
     </div>

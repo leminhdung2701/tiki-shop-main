@@ -12,6 +12,8 @@ from django.db.models import Q,F
 from django.views.generic import ListView
 from datetime import datetime
 from django.db.models import Avg
+from django.core.paginator import EmptyPage, Paginator
+
 # Create your views here.
 
 def home(request):
@@ -19,7 +21,17 @@ def home(request):
     products = Product.objects.filter(is_active=True, is_featured=True)[:8]
     products_popular = Product.objects.all().order_by('-count')[:8]
     all_categories = Category.objects.all()
-    all_products = Product.objects.all()     
+    all_product = Product.objects.all() 
+    all_products = []
+    count_item_show = 8
+    for category in all_categories:
+        i = 0
+        for product in all_product:
+            if i < count_item_show and product.category == category:
+                all_products.append(product)
+                i+=1
+
+    # all_products = Product.objects.all()     
    
     context = {
         'categories': categories,
@@ -90,12 +102,13 @@ def price__range(min_price,max_price):
 
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(is_active=True, category=category, )
+    products = Product.objects.filter(is_active=True, category=category)    
     categories = Category.objects.filter(is_active=True)
     filter_price = request.GET.get('filter_price', '')
     sorting = request.GET.get('sorting', '')
     min_price=0
     max_price=99999999999
+    # Lọc theo giá
     if filter_price !='':
         if filter_price == '1':
                 min_price=0
@@ -110,42 +123,47 @@ def category_products(request, slug):
                 min_price=400000
                 max_price=1000000
         if filter_price == '5':
-                min_price=1000000
-
+                min_price=1000000        
         products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
         context = {
+            'type':1,
             'category': category,
             'products': products,
             'categories': categories,
             'filter_price': filter_price,
         }   
-        return render(request, 'store/category_products.html', context)   
-
-
-
-
+        return render(request, 'store/category_products.html', context) 
+    # Sắp xếp
     if sorting != '':        
         if sorting == "high-low":
             products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')
         if sorting == "low-high":
-            products = reversed(list(Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')))
+            products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price').reverse()
+            # products = reversed(list(Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')))
         if sorting == "popularity":
-            products == []
+            products = []        
         context = {
+            'type':1,
             'category': category,
             'products': products,
             'categories': categories,
             'sorting':sorting,
         }
         return render(request, 'store/category_products.html', context)
-
-
+    # Product     
+    p = Paginator(products, 9)
+    page_num = request.GET.get('page',1)
+    try:
+        page = p.page(page_num)
+    except EmptyPage:
+        page = p.page(1)
     context = {
+        'type':0,
+        'all':products,
         'category': category,
-        'products': products,
+        'products': page,
         'categories': categories,
     }   
-
     return render(request, 'store/category_products.html', context)
 
 
@@ -354,6 +372,7 @@ def add_notifi_like_cp(request):
 
     return redirect('store:category-products',cate_slug) 
     
+
 
 @login_required
 def orders(request):

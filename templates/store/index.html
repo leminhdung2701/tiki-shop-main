@@ -132,9 +132,9 @@
                       
                       <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
                         {% if product.product_image %}
-                          <img class="img-fluid w-100" src="{{ product.product_image.url }}" alt="{{product.title}}">
+                          <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{{ product.product_image.url }}" alt="{{product.title}}">
                         {% else %}
-                          <img class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{product.title}}">
+                          <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{product.title}}">
                         {% endif %}
                       </a>
 
@@ -175,17 +175,21 @@
         <!-- Post -->
 
         <section style="margin-bottom: 100px;">
-          <div class="row">            
+          <div style="margin-bottom: 100px;" class="row">            
 
           {% if all_categories %}
             {% for category in all_categories %}
               <div class="col-md-10">
-                <header style="margin-bottom: 10px;">
+                <header  style="margin-bottom: 10px;" >
                   <a  href="{% url 'store:category-products' category.slug %}">
-                    <h2 class="h5 text-uppercase mb-4">{{ category.title}}</h2>
+                    <h2 style="font-size: 25px;" class="h5 text-uppercase mb-4">{{ category.title}}</h2>
                   </a>                  
                 </header>
+                
               </div>
+              <a style="right:0; color:black" href="{% url 'store:category-products' category.slug %}" >
+                Xem thêm 
+              </a>
               <div class="row">
                 {% for product in all_products %}
                   {% if product.category == category%}  
@@ -199,9 +203,9 @@
                     
                           <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
                             {% if product.product_image %}
-                            <img class="img-fluid w-100" src="{{ product.product_image.url }}" alt="{{product.title}}">
+                            <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{{ product.product_image.url }}" alt="{{product.title}}">
                             {% else %}
-                            <img class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{product.title}}">
+                            <img style='height: 255px; width: 255px' class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{product.title}}">
                             {% endif %}
                           </a>
                     
