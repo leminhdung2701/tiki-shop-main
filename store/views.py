@@ -168,7 +168,10 @@ class RegistrationView(View):
 @login_required
 def profile(request):
     addresses = Address.objects.filter(user=request.user)
-    orders = Order.objects.filter(user=request.user).order_by('-status','-ordered_date')
+    orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
+    order = ['Pending', 'Accepted', 'Packed','On The Way','Delivered','Cancelled']
+    order = {key: i for i, key in enumerate(order)}
+    ordered_sections = sorted(orders, key=lambda orders: order.get(orders.status, 0))
     profile = request.user.profile
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
@@ -176,7 +179,7 @@ def profile(request):
         if form.is_valid():
             form.save()
     
-    return render(request, 'account/profile.html', {'addresses':addresses, 'orders':orders,'form':form})
+    return render(request, 'account/profile.html', {'addresses':addresses, 'orders':ordered_sections,'form':form})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -354,8 +357,11 @@ def add_notifi_like_cp(request):
 
 @login_required
 def orders(request):
-    all_orders = Order.objects.filter(user=request.user).order_by('-status','-ordered_date')
-    return render(request, 'store/orders.html', {'orders': all_orders})
+    all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
+    order = ['Pending', 'Accepted', 'Packed','On The Way','Delivered','Cancelled']
+    order = {key: i for i, key in enumerate(order)}
+    ordered_sections = sorted(all_orders, key=lambda all_orders: order.get(all_orders.status, 0))
+    return render(request, 'store/orders.html', {'orders': ordered_sections})
 
 def shop(request):
     return render(request, 'store/shop.html')
