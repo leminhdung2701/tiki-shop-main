@@ -167,7 +167,7 @@ class RegistrationView(View):
 @login_required
 def profile(request):
     addresses = Address.objects.filter(user=request.user)
-    orders = Order.objects.filter(user=request.user)
+    orders = Order.objects.filter(user=request.user).order_by('-status','-ordered_date')
     profile = request.user.profile
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
@@ -353,7 +353,7 @@ def add_notifi_like_cp(request):
 
 @login_required
 def orders(request):
-    all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
+    all_orders = Order.objects.filter(user=request.user).order_by('-status','-ordered_date')
     return render(request, 'store/orders.html', {'orders': all_orders})
 
 def shop(request):
