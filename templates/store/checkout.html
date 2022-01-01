@@ -28,11 +28,11 @@
           <h2 class="h5 text-uppercase mb-4">Thông tin  </h2>
           <div class="row">
             <div class="col-lg-8">
-              <form action="#">
+              <form action="#" method="get">
                 <div class="row">
                   <div class="col-lg-6 form-group">
                     <label class="text-small text-uppercase" for="firstName">Tên của bạn</label>
-                    <input class="form-control form-control-lg" id="firstName" type="text" placeholder="Nhập tên của bạn">
+                    <input class="form-control form-control-lg" id="firstName" type="text" placeholder="Nhập tên của bạn" value="{{user.username}}">
                   </div>
                   <div class="col-lg-6 form-group">
                     <label class="text-small text-uppercase" for="lastName">Họ tên </label>
@@ -40,43 +40,32 @@
                   </div>
                   <div class="col-lg-6 form-group">
                     <label class="text-small text-uppercase" for="email">Địa chỉ Email</label>
-                    <input class="form-control form-control-lg" id="email" type="email" placeholder="VD: nguyenvana@gmail.com">
+                    <input class="form-control form-control-lg" id="email" type="email" placeholder="VD: nguyenvana@gmail.com" value="{{user.email}}">
                   </div>
                   <div class="col-lg-6 form-group">
                     <label class="text-small text-uppercase" for="phone">Số điện thoại</label>
                     <input class="form-control form-control-lg" id="phone" type="tel" placeholder="VD: +84 0946 258 689">
                   </div>
-                  <div class="col-lg-6 form-group">
-                    <label class="text-small text-uppercase" for="company">Tên công ty (nếu có)</label>
-                    <input class="form-control form-control-lg" id="company" type="text" placeholder="Tên công ty của bạn">
-                  </div>
-                  <div class="col-lg-6 form-group">
-                    <label class="text-small text-uppercase" for="country">Quốc gia</label>
-                    <select class="selectpicker country" id="country" data-width="fit" data-style="form-control form-control-lg" data-title="Chọn quốc gia của bạn"></select>
-                  </div>
                   <div class="col-lg-12 form-group">
                     <label class="text-small text-uppercase" for="address">Địa chỉ 1</label>
-                    <input class="form-control form-control-lg" id="address" type="text" placeholder="Số nhà và tên đường">
-                  </div>
-                  <div class="col-lg-12 form-group">
-                    <label class="text-small text-uppercase" for="address">Địa chỉ 2</label>
-                    <input class="form-control form-control-lg" id="addressalt" type="text" placeholder="Căn hộ hoặc chung cư ... (nếu có)">
+                    <input class="form-control form-control-lg" id="address" type="text" placeholder="Số nhà và tên đường" name="locality">
                   </div>
                   <div class="col-lg-6 form-group">
-                    <label class="text-small text-uppercase" for="city">Huyện/Thành phố</label>
-                    <input class="form-control form-control-lg" id="city" type="text">
+                    <label class="text-small text-uppercase" for="city">Huyện/Quận</label>
+                    <input class="form-control form-control-lg" id="city" type="text" name="city">
                   </div>
                   <div class="col-lg-6 form-group">
-                    <label class="text-small text-uppercase" for="state">Tỉnh</label>
-                    <input class="form-control form-control-lg" id="state" type="text">
+                    <label class="text-small text-uppercase" for="state">Tỉnh/Thành Phố</label>
+                    <input class="form-control form-control-lg" id="state" type="text" name="state">
                   </div>
-                  <div class="col-lg-6 form-group">
+                  <!-- <div class="col-lg-6 form-group">
                     <div class="custom-control custom-checkbox">
                       <input class="custom-control-input" id="alternateAddressCheckbox" type="checkbox">
                       <label class="custom-control-label text-small" for="alternateAddressCheckbox">Địa chỉ thanh toán thay thế</label>
                     </div>
                   </div>
-                  <div class="col-lg-12">
+                 -->
+                  <!-- <div class="col-lg-12">
                     <div class="row d-none" id="alternateAddress">
                       <div class="col-12 mt-4">
                         <h2 class="h4 text-uppercase mb-4">Địa chỉ thanh toán thay thế  </h2>
@@ -97,14 +86,6 @@
                         <label class="text-small text-uppercase" for="phone2">Số điện thoại</label>
                         <input class="form-control form-control-lg" id="phone2" type="tel" placeholder="VD: +84 0946 258 689">
                       </div>
-                      <div class="col-lg-6 form-group">
-                        <label class="text-small text-uppercase" for="company2">Tên công ty (nếu có)</label>
-                        <input class="form-control form-control-lg" id="company2" type="text" placeholder="Tên công ty của bạn">
-                      </div>
-                      <div class="col-lg-6 form-group">
-                        <label class="text-small text-uppercase" for="country2">Quốc gia</label>
-                        <select class="selectpicker country" id="country2" data-width="fit" data-style="form-control form-control-lg" data-title="Chọn quốc gia của bạn"></select>
-                      </div>
                       <div class="col-lg-12 form-group">
                         <label class="text-small text-uppercase" for="address2">Địa chỉ 1</label>
                         <input class="form-control form-control-lg" id="address2" type="text" placeholder="Số nhà và tên đường">
@@ -122,7 +103,7 @@
                         <input class="form-control form-control-lg" id="state4" type="text">
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-lg-12 form-group">
                     <button class="btn btn-dark" type="submit">Đặt hàng</button>
                   </div>
@@ -134,12 +115,13 @@
               <div class="card border-0 rounded-0 p-lg-4 bg-light">
                 <div class="card-body">
                   <h5 class="text-uppercase mb-4">Đơn đặt hàng</h5>
+                
                   <ul class="list-unstyled mb-0">
-                    <li class="d-flex align-items-center justify-content-between"><strong class="small font-weight-bold">Red digital smartwatch Red digital smartwatch Red digital smartwatch Red digital smartwatch</strong><span class="text-muted small">$250</span></li>
+                    {% for cart_product in cart %}
+                    <li class="d-flex align-items-center justify-content-between"><strong class="small font-weight-bold">{{cart_product.product.title}}</strong><span class="text-muted small">{{cart_product.quantity}}*{{cart_product.product.price}}đ</span></li>
                     <li class="border-bottom my-2"></li>
-                    <li class="d-flex align-items-center justify-content-between"><strong class="small font-weight-bold">Gray Nike running shoes</strong><span class="text-muted small">$351</span></li>
-                    <li class="border-bottom my-2"></li>
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Tổng</strong><span>$601</span></li>
+                    {% endfor %}
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Tổng</strong><span>{{tong}}</span></li>
                   </ul>
                 </div>
               </div>

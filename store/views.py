@@ -287,7 +287,6 @@ def minus_cart(request, cart_id):
 def checkout(request):
     user = request.user
     address_id = request.GET.get('address')
-    
     address = get_object_or_404(Address, id=address_id)
     # Get all the products of User in Cart
     cart = Cart.objects.filter(user=user)
@@ -298,7 +297,35 @@ def checkout(request):
         c.delete()
     return redirect('store:orders')
 
-
+@login_required
+def checkout_test(request):
+    user = request.user
+    cart = Cart.objects.filter(user=user)
+    tong = 0
+    locality = request.GET.get('locality', '')
+    city = request.GET.get('city', '')
+    state = request.GET.get('state', '')
+    for c in cart:
+        tong = tong + c.product.price*c.quantity
+    if(locality and city and state):
+        user=request.user
+        reg = Address(user=user, locality=locality, city=city, state=state)
+        reg.save()
+        user = request.user
+        # Get all the products of User in Cart
+        cart = Cart.objects.filter(user=user)
+        for c in cart:
+            # Saving all the products from Cart to Order
+            Order(user=user, address=reg, product=c.product, quantity=c.quantity).save()
+            # And Deleting from Cart
+            c.delete()
+        return redirect('store:orders')
+    context = {
+        'user':user,
+       'cart' :cart,
+       'tong' : tong,
+    }
+    return render(request, 'store/checkout.html',context)
 @login_required
 def add_to_cart(request):
     user = request.user
@@ -384,11 +411,6 @@ def orders(request):
 
 def shop(request):
     return render(request, 'store/shop.html')
-
-@login_required
-def checkout_test(request):
-    return render(request, 'store/checkout.html')
-
 
 def test(request):
     return render(request, 'store/test.html')
