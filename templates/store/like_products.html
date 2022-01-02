@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="container py-5">
+
+
+    <div class="row">
+
+
+
+        <div class="col-lg-12">
+            <div class="card mb-4" id="tables">
+                <div class="card-header text-center">Sản phẩm ưu thích</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Giá</th>
+                                <th>Danh mục</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% if orders %}
+
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{order.product.title}}</td>
+                                <td>
+                                    {% if order.product.product_image %}
+                                    <img src="{{order.product.product_image.url}}" alt="{{order.product.product_ttile}}"
+                                        style="width:150px;">
+                                    {% endif %}
+                                </td>
+                                <td>{{order.quantity}}</td>
+                                <td>{{order.ordered_date|naturaltime}}</td>
+
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+{% endblock content %}

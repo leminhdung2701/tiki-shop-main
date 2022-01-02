@@ -21,6 +21,8 @@ urlpatterns = [
     path('checkout/', views.checkout, name="checkout"),
     path('checkout-test/', views.checkout_test, name="checkout-test"),
     path('orders/', views.orders, name="orders"),
+    path('purchase-orders/', views.purchase_orders, name="purchase-orders"),
+    path('like-products/', views.like_products, name="like-products"),
 
     #URL for Products
     path('product/<slug:slug>/', views.detail, name="product-detail"),

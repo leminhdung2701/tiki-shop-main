@@ -424,6 +424,16 @@ def orders(request):
     ordered_sections = sorted(all_orders, key=lambda all_orders: order.get(all_orders.status, 0))
     return render(request, 'store/orders.html', {'orders': ordered_sections})
 
+@login_required
+def purchase_orders(request):
+    context={}
+    return render(request, 'store/purchase_orders.html',context)
+
+@login_required
+def like_products(request):
+    context={}
+    return render(request, 'store/like_products.html',context)
+
 def shop(request):
     return render(request, 'store/shop.html')
 
