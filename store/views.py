@@ -128,6 +128,7 @@ def category_products(request, slug):
         context = {
             'type':1,
             'category': category,
+            'all':products,
             'products': products,
             'categories': categories,
             'filter_price': filter_price,
@@ -141,10 +142,23 @@ def category_products(request, slug):
             products = Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price').reverse()
             # products = reversed(list(Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price).order_by('-price')))
         if sorting == "popularity":
-            products = []        
+            products = list(Product.objects.filter(is_active=True, category=category,price__lte=max_price,price__gte=min_price))
+            count = [None]*len(products)
+            i=0
+            for product in products:
+                count[i] = Order.objects.filter(product = product).count()
+                i=i+1
+            n = len(count)
+            i=0
+            for i in range(n-1):
+                for j in range(0, n-i-1):
+                    if count[j] < count[j + 1] :
+                        count[j], count[j + 1] = count[j + 1], count[j]
+                        products[j], products[j + 1] = products[j + 1], products[j]
         context = {
             'type':1,
             'category': category,
+            'all':products,
             'products': products,
             'categories': categories,
             'sorting':sorting,
@@ -319,6 +333,7 @@ def checkout_test(request):
             Order(user=user, address=reg, product=c.product, quantity=c.quantity).save()
             # And Deleting from Cart
             c.delete()
+        
         return redirect('store:orders')
     context = {
         'user':user,
