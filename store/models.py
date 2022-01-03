@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from annoying.fields import AutoOneToOneField
 from django.db.models import Avg
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.conf import settings
 # Create your models here.
 class Address(models.Model):
     user = models.ForeignKey(User, verbose_name="Tên người dùng", on_delete=models.CASCADE)
@@ -50,6 +51,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian tạo")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Cập nhật")
     count = models.IntegerField(default=0)
+    
     class Meta:
         verbose_name_plural = 'Products'
         ordering = ('-created_at', )
@@ -132,3 +134,20 @@ class ProductReview(models.Model):
 
     def get_review_rating(self):
         return self.review_rating
+class Favorite(models.Model):
+    """User favorite products"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='favorites'
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='favorites'
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'product'], name='favorite_once')
+        ]

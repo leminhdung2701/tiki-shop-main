@@ -32,11 +32,13 @@
                             {% for order in orders %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
-                                <td>{{order.product.title}}</td>
+                                <td><a href="{% url 'store:product-detail' order.product.slug %}">{{order.product.title}}</a></td>
                                 <td>
                                     {% if order.product.product_image %}
+                                    <a href="{% url 'store:product-detail' order.product.slug %}">
                                     <img src="{{order.product.product_image.url}}" alt="{{order.product.product_ttile}}"
                                         style="width:150px;">
+                                    </a>
                                     {% endif %}
                                 </td>
                                 <td>{{order.quantity}}</td>

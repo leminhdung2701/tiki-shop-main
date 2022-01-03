@@ -1,6 +1,6 @@
 import django
 from django.contrib.auth.models import User
-from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile,ProductReview
+from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile,ProductReview,Favorite
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import RegistrationForm, AddressForm,CommentForm,ProfileForm,RatingForm
 from django.contrib import messages
@@ -45,6 +45,7 @@ def home(request):
 
 
 def detail(request, slug):
+    user = request.user
     product = get_object_or_404(Product, slug=slug)
     Product.objects.filter(slug=slug).update(count = F('count')+1)  # category count view +1
     Category.objects.filter(title=product.category.title).update(count = F('count')+1) #categor count view +1
@@ -52,12 +53,14 @@ def detail(request, slug):
     form = CommentForm(instance=product)
     form1 =  RatingForm(instance=product)
     avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
+    checklike = Favorite.objects.filter(user=user,product=product)
     context = {
         'form': form,
         'form1': form1,
         'product': product,
         'related_products': related_products,
         'avg':avg,
+        'checklike':checklike,
     }
     # avg= product.productReview_set.aggregate(Avg('review_rating')).values()[0]
     if request.method == 'POST':
@@ -65,12 +68,11 @@ def detail(request, slug):
         form1 = RatingForm(request.POST, instance=product)
         if form.is_valid():
             name = request.user.username
-            user = request.user
             body = form.cleaned_data['content']
             c = Comment(product=product,user = user, commenter_name=name, comment_body=body, date_added=datetime.now())
             c.save()          
         elif form1.is_valid():
-            user = request.user
+    
             review_text = form1.cleaned_data['review_text']
             review_rating = form1.cleaned_data['review_rating']
             if(ProductReview.objects.filter(user=user).exists()):
@@ -388,7 +390,7 @@ def add_notifi_like_home(request):
             content=title
 
         Notification(user=user,slug=slug, content =content ,type=1).save()
-
+        Favorite(user=user,product=product).save()
     return redirect('store:home')
 
 
@@ -411,7 +413,10 @@ def add_notifi_like_cp(request):
             content=title
 
         Notification(user=user,slug=slug, content =content ,type=1).save()
-
+        if(Favorite.objects.filter(user=user,product=product)):
+            Favorite.objects.filter(user=user,product=product).delete()
+        else:
+            Favorite(user=user,product=product).save()
     return redirect('store:category-products',cate_slug) 
     
 
@@ -426,12 +431,16 @@ def orders(request):
 
 @login_required
 def purchase_orders(request):
-    context={}
-    return render(request, 'store/purchase_orders.html',context)
+    all_orders = Order.objects.filter(user=request.user,status='Delivered').order_by('-ordered_date')
+    return render(request, 'store/purchase_orders.html', {'orders': all_orders})
 
 @login_required
 def like_products(request):
-    context={}
+    user = request.user
+    favorites=Favorite.objects.filter(user=user)
+    context={
+        'favorites':favorites,
+    }
     return render(request, 'store/like_products.html',context)
 
 def shop(request):
