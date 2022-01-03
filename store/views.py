@@ -13,7 +13,7 @@ from django.views.generic import ListView
 from datetime import datetime
 from django.db.models import Avg
 from django.core.paginator import EmptyPage, Paginator
-
+from django.db.models import Q
 # Create your views here.
 
 def home(request):
@@ -477,7 +477,7 @@ class SearchView(ListView):
         result = super(SearchView, self).get_queryset()
         query = self.request.GET.get('query')
         if query:
-            postresult = Product.objects.filter(title__icontains=query)
+            postresult = Product.objects.filter(Q(title__icontains=query)  | Q(category__title__icontains=query )|Q(slug__icontains=query ))
             result = postresult
         else:
             result = None
