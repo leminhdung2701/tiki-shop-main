@@ -23,7 +23,8 @@ def home(request):
     all_categories = Category.objects.all()
     all_product = Product.objects.all() 
     all_products = []
-    count_item_show = 8
+    count_item_show = 8 
+   
     for category in all_categories:
         i = 0
         for product in all_product:
@@ -40,7 +41,7 @@ def home(request):
         'all_categories': all_categories,
         'all_products': all_products,
     }
-    
+
     return render(request, 'store/index.html', context)
 
 
@@ -53,7 +54,9 @@ def detail(request, slug):
     form = CommentForm(instance=product)
     form1 =  RatingForm(instance=product)
     avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
-    checklike = Favorite.objects.filter(user=user,product=product)
+    checklike = None
+    if request.user.is_authenticated:
+        checklike = Favorite.objects.filter(user=user,product=product)
     context = {
         'form': form,
         'form1': form1,
@@ -390,7 +393,16 @@ def add_notifi_like_home(request):
             content=title
 
         Notification(user=user,slug=slug, content =content ,type=1).save()
-        Favorite(user=user,product=product).save()
+        if(Favorite.objects.filter(user=user,product=product)): #tồn tại like rồi
+            Favorite.objects.filter(user=user,product=product).delete()
+            product.likes -= 1
+            product.user_likes.remove(user)
+            product.save()
+        else:
+            Favorite(user=user,product=product).save()
+            product.likes += 1
+            product.user_likes.add(user)
+            product.save()
     return redirect('store:home')
 
 
@@ -413,10 +425,16 @@ def add_notifi_like_cp(request):
             content=title
 
         Notification(user=user,slug=slug, content =content ,type=1).save()
-        if(Favorite.objects.filter(user=user,product=product)):
+        if(Favorite.objects.filter(user=user,product=product)): #tồn tại like rồi
             Favorite.objects.filter(user=user,product=product).delete()
+            product.likes -= 1
+            product.user_likes.remove(user)
+            product.save()
         else:
             Favorite(user=user,product=product).save()
+            product.likes += 1
+            product.user_likes.add(user)
+            product.save()
     return redirect('store:category-products',cate_slug) 
     
 

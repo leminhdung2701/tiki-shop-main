@@ -132,7 +132,11 @@
                           {% comment %}<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a>{% endcomment %}
                           <form action="{% url 'store:add-notifi-like-cp'  %}">
                             <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
-                            <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart"></i></button>
+                            {% if user not in product.user_likes.all %}
+                            <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart mr-2" style="color:red"></i></button>
+                            {% else %}
+                            <button type="submit" class="btn btn-sm btn-outline-dark"><i class="fas fa-heart" style="color:red"></i></button>
+                            {% endif %}
                           </form>
                         <li class="list-inline-item m-0 p-0">
                           {% comment %} <a class="btn btn-sm btn-dark" href="{% url 'store:add-to-cart' %}">Thêm vào
