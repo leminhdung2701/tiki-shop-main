@@ -13,6 +13,8 @@
 * ==========================================
 *
 */
+
+
 .text-small {
   font-size: 0.85rem !important;
 }
@@ -1572,6 +1574,8 @@ STYLE SWITCHER FOR DEMO
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+
+
 @media screen and (prefers-reduced-motion: reduce) {
   .btn {
     transition: none;
@@ -1592,8 +1596,9 @@ STYLE SWITCHER FOR DEMO
 
 .btn-link {
   font-weight: 400;
-  color: #dcb14a;
+  color: none;
 }
+
 
 .btn-link:hover {
   color: #b68b23;

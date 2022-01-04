@@ -215,6 +215,7 @@ def profile(request):
         form = ProfileForm(request.POST, request.FILES,instance=profile)
         if form.is_valid():
             form.save()
+        messages.success(request, "Đã cập nhật ảnh đại diện.")
     
     return render(request, 'account/profile.html', {'addresses':addresses, 'orders':ordered_sections,'form':form})
 
@@ -242,7 +243,7 @@ class AddressView(View):
 def remove_address(request, id):
     a = get_object_or_404(Address, user=request.user, id=id)
     a.delete()
-    messages.success(request, "Address removed.")
+    messages.success(request, "Địa chỉ đã được xoá.")
     return redirect('store:profile')
 
 

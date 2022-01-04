@@ -61,11 +61,23 @@
 
           </div>
           {% if not checklike %}
-        </div><a class="btn btn-link text-dark p-0 mb-4" href="#"><i class="far fa-heart mr-2 "style="color:red" ></i>Sản phẩm ưu
-          thích</a><br>
+          </div> 
+            <div style="margin-bottom: 18px;">
+                            <button style="box-shadow: none;" type="submit" class="btn p-0"><i class="far fa-heart"
+                                style="color:red; font-size: 18px;"></i></button>
+                            Sản phẩm ưu thích
+                            <br>
+            </div>           
+
+            
           {% else %}
-        </div><a class="btn btn-link text-dark p-0 mb-4" href="#" active><i class="fas fa-heart"  style="color:red"></i>Sản phẩm bạn ưu
-          thích</a><br>
+            </div>
+            <div style="margin-bottom: 18px;">
+              <button style="box-shadow: none;" type="submit" class="btn p-0"><i class="fas fa-heart"
+                  style="color:red; font-size: 18px;"></i></button>
+              Sản phẩm ưu thích
+              <br>
+            </div>
           {% endif %}
         <ul class="list-unstyled small d-inline-block">
           <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">Mã SP:</strong><span
@@ -86,8 +98,8 @@
           <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Danh mục:</strong><a
               class="reset-anchor ml-2"
               href="{% url 'store:category-products' product.category.slug %}">{{product.category}}</a></li>
-          <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Tags:</strong><a
-              class="reset-anchor ml-2" href="#">Innovation</a></li>
+          <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Số lượt mua:</strong><a
+              class="reset-anchor ml-2" href="#">1000</a></li>
         </ul>
       </div>
     </div>
@@ -200,16 +212,19 @@
           <div class="d-block mb-3 position-relative">
             <a class="d-block" href="{% url 'store:product-detail' rp.slug %}">
               {% if rp.product_image %}
-              <img class="img-fluid w-100" src="{{rp.product_image.url}}" alt="{{rp.title}}">
+              <img style='height: 230px; width: 230px' class="img-fluid w-100" src="{{rp.product_image.url}}" alt="{{rp.title}}">
               {% else %}
-              <img class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{rp.title}}">
+              <img style='height: 230px; width: 230px' class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="{{rp.title}}">
               {% endif %}
             </a>
 
             <div class="product-overlay">
               <ul class="mb-0 list-inline">
-                <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
-                      class="far fa-heart"></i></a></li>
+                {% if user not in product.user_likes.all %}
+                <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart " style="color:red"></i></button>
+                {% else %}
+                <button type="submit" class="btn btn-sm btn-outline-dark"><i class="fas fa-heart " style="color:red"></i></button>
+                {% endif %}
                 <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark"
                     href="{% url 'store:add-to-cart' %}">Thêm vào giỏ</a></li>
               </ul>
