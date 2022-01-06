@@ -50,7 +50,7 @@ def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     Product.objects.filter(slug=slug).update(count = F('count')+1)  # category count view +1
     Category.objects.filter(title=product.category.title).update(count = F('count')+1) #categor count view +1
-    related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
+    related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)[:8]
     form = CommentForm(instance=product)
     form1 =  RatingForm(instance=product)
     avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
@@ -347,6 +347,7 @@ def checkout_test(request):
        'tong' : tong,
     }
     return render(request, 'store/checkout.html',context)
+
 @login_required
 def add_to_cart(request):
     user = request.user
@@ -393,13 +394,14 @@ def add_notifi_like_home(request):
         else:
             content=title
 
-        Notification(user=user,slug=slug, content =content ,type=1).save()
         if(Favorite.objects.filter(user=user,product=product)): #tồn tại like rồi
+            Notification.objects.filter(user=user,slug=product.slug,type=1).delete()
             Favorite.objects.filter(user=user,product=product).delete()
             product.likes -= 1
             product.user_likes.remove(user)
             product.save()
         else:
+            Notification(user=user,slug=slug, content =content ,type=1).save()
             Favorite(user=user,product=product).save()
             product.likes += 1
             product.user_likes.add(user)
@@ -425,18 +427,50 @@ def add_notifi_like_cp(request):
         else:
             content=title
 
-        Notification(user=user,slug=slug, content =content ,type=1).save()
         if(Favorite.objects.filter(user=user,product=product)): #tồn tại like rồi
+            Notification.objects.filter(user=user,slug=product.slug,type=1).delete()
             Favorite.objects.filter(user=user,product=product).delete()
             product.likes -= 1
             product.user_likes.remove(user)
             product.save()
         else:
+            Notification(user=user,slug=slug, content =content ,type=1).save()
             Favorite(user=user,product=product).save()
             product.likes += 1
             product.user_likes.add(user)
             product.save()
     return redirect('store:category-products',cate_slug) 
+
+@login_required
+def add_notifi_like_p(request):
+    print("Hello")
+    user = request.user
+    product_id = request.GET.get('prod_id')
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'GET':      
+        content=""  
+        title = "Bạn" +" đã thích sản phẩm " +  product.title 
+        slug=product.slug
+        if len(title)>70:  
+            i=70          
+            while title[i] != " ":
+                i=i-1
+            content=title[:i]+" ..."
+        else:
+            content=title
+        if(Favorite.objects.filter(user=user,product=product)): #tồn tại like rồi
+            Notification.objects.filter(user=user,slug=product.slug,type=1).delete()
+            Favorite.objects.filter(user=user,product=product).delete()
+            product.likes -= 1
+            product.user_likes.remove(user)
+            product.save()
+        else:
+            Notification(user=user,slug=slug, content =content ,type=1).save()
+            Favorite(user=user,product=product).save()
+            product.likes += 1
+            product.user_likes.add(user)
+            product.save()
+    return redirect('store:product-detail',product.slug) 
     
 
 

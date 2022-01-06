@@ -55,30 +55,31 @@
             <form action="{% url 'store:add-to-cart' %}">
               <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
               <button type="submit"
-                class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Chọn
-                mua</button>
+                class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Chọn mua</button>
             </form>
 
           </div>
-          {% if not checklike %}
-          </div> 
-            <div style="margin-bottom: 18px;">
-                            <button style="box-shadow: none;" type="submit" class="btn p-0"><i class="far fa-heart"
-                                style="color:red; font-size: 18px;"></i></button>
-                            Sản phẩm ưu thích
-                            <br>
-            </div>           
-
-            
-          {% else %}
+          {% comment %}<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart" style="color:red;"></i></a>{% endcomment %}
+          <form action="{% url 'store:add-notifi-like-p'%}">
+            <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+            {% if not checklike %}
+            </div> 
+              <div style="margin-bottom: 18px;">
+                <button style="box-shadow: none;" type="submit" class="btn p-0">
+                  <i class="far fa-heart" style="color:red;"></i></button>
+                Sản phẩm ưu thích
+                <br>
+            </div> 
+            {% else %}
             </div>
             <div style="margin-bottom: 18px;">
-              <button style="box-shadow: none;" type="submit" class="btn p-0"><i class="fas fa-heart"
-                  style="color:red; font-size: 18px;"></i></button>
+              <button style="box-shadow: none;" type="submit" class="btn p-0">
+                <i class="fas fa-heart" style="color:red;"></i></button>
               Sản phẩm ưu thích
               <br>
             </div>
-          {% endif %}
+            {% endif %}
+          </form>
         <ul class="list-unstyled small d-inline-block">
           <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">Mã SP:</strong><span
               class="ml-2 text-muted">{{product.sku}}</span></li>
@@ -220,13 +221,23 @@
 
             <div class="product-overlay">
               <ul class="mb-0 list-inline">
-                {% if user not in product.user_likes.all %}
-                <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart " style="color:red"></i></button>
-                {% else %}
-                <button type="submit" class="btn btn-sm btn-outline-dark"><i class="fas fa-heart " style="color:red"></i></button>
-                {% endif %}
-                <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark"
-                    href="{% url 'store:add-to-cart' %}">Thêm vào giỏ</a></li>
+                <li class="list-inline-item m-0 p-0">
+                  {% comment %}<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart "></i></a>{% endcomment %}
+                  <form action="{% url 'store:add-notifi-like-p' %}">
+                    <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                    {% if user not in product.user_likes.all %}
+                    <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart " style="color:red"></i></button>
+                    {% else %}
+                    <button type="submit" class="btn btn-sm btn-outline-dark"><i class="fas fa-heart " style="color:red"></i></button>
+                    {% endif %}
+                  </form>
+                </li>
+              <li class="list-inline-item m-0 p-0">
+                <form action="{% url 'store:add-to-cart' %}">
+                  <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                  <button type="submit" class="btn btn-sm btn-dark">Thêm vào giỏ</button>
+                </form>
+              </li>
               </ul>
             </div>
           </div>
