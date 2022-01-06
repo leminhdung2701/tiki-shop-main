@@ -54,6 +54,7 @@ def detail(request, slug):
     form = CommentForm(instance=product)
     form1 =  RatingForm(instance=product)
     avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
+    count_buy = Order.objects.filter(product = product,status='Delivered').count()
     checklike = None
     if request.user.is_authenticated:
         checklike = Favorite.objects.filter(user=user,product=product)
@@ -64,6 +65,7 @@ def detail(request, slug):
         'related_products': related_products,
         'avg':avg,
         'checklike':checklike,
+        'count':count_buy,
     }
     # avg= product.productReview_set.aggregate(Avg('review_rating')).values()[0]
     if request.method == 'POST':
