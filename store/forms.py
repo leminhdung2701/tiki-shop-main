@@ -26,7 +26,7 @@ class RegistrationForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     username = UsernameField(label=_("Tên tài khoản"),widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'}))
-    password = forms.CharField(label=_("Mậ khẩu"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password', 'class':'form-control'}))
+    password = forms.CharField(label=_("Mật khẩu"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password', 'class':'form-control'}))
 
 
 class AddressForm(forms.ModelForm):
@@ -74,6 +74,6 @@ class RatingForm(forms.ModelForm):
         'rows': '4',
     }))
     class Meta:
-        model = ProductReview
+        model = Productview
         fields=('review_text','review_rating')
    
