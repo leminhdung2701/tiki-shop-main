@@ -35,7 +35,7 @@ class Category(models.Model):
 class Profile(models.Model):
     user = AutoOneToOneField(User, primary_key=True,on_delete=models.CASCADE, verbose_name="Tên tài khoản")
     phone = models.CharField(max_length=200, null=True, verbose_name="Số điện thoại")
-    profile_pic = models.ImageField(default="avatar/anna.jpg", null=True, blank=True,upload_to='avatar', verbose_name="Ảnh đại diện")
+    profile_pic = models.ImageField(default="avatar/default avatar.jpg", null=True, blank=True,upload_to='avatar', verbose_name="Ảnh đại diện")
     
 class Product(models.Model):
     title = models.CharField(max_length=150, verbose_name="Tên sản phẩm")
@@ -135,7 +135,7 @@ class ProductReview(models.Model):
 
     def get_review_rating(self):
         return self.review_rating
-        
+
 class Favorite(models.Model):
     """User favorite products"""
     user = models.ForeignKey(

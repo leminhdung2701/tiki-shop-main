@@ -14,7 +14,6 @@ from datetime import datetime
 from django.db.models import Avg
 from django.core.paginator import EmptyPage, Paginator
 from django.db.models import Q
-# Create your views here.
 
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True).order_by('-count')[:4]
@@ -310,13 +309,27 @@ def checkout(request):
     user = request.user
     address_id = request.GET.get('address')
     address = get_object_or_404(Address, id=address_id)
+    content=""  
+    title = "Bạn đã đặt hàng thành công " 
     # Get all the products of User in Cart
     cart = Cart.objects.filter(user=user)
     for c in cart:
-        # Saving all the products from Cart to Order
+        title = title + str(c.product.title)+", "
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
-        # And Deleting from Cart
         c.delete()
+   
+    # Notification
+    if request.method == 'GET':
+        title=title[:-2] 
+        slug = ""
+        if len(title)>70:  
+            i=70          
+            while title[i] != " ":
+                i=i-1
+            content=title[:i]+" ..."
+        else:
+            content=title
+        Notification(user=user,slug=slug, content =content ,type=0).save()
     return redirect('store:orders')
 
 @login_required
@@ -327,6 +340,8 @@ def checkout_test(request):
     locality = request.GET.get('locality', '')
     city = request.GET.get('city', '')
     state = request.GET.get('state', '')
+    content=""  
+    title = "Bạn đã đặt hàng thành công " 
     for c in cart:
         tong = tong + c.product.price*c.quantity
     if(locality and city and state):
@@ -337,17 +352,29 @@ def checkout_test(request):
         # Get all the products of User in Cart
         cart = Cart.objects.filter(user=user)
         for c in cart:
-            # Saving all the products from Cart to Order
+            title = title + str(c.product.title)+", "
             Order(user=user, address=reg, product=c.product, quantity=c.quantity).save()
-            # And Deleting from Cart
             c.delete()
-        
+        if request.method == 'GET':
+            title=title[:-2] 
+            slug = ""
+            if len(title)>70:  
+                i=70          
+                while title[i] != " ":
+                    i=i-1
+                content=title[:i]+" ..."
+            else:
+                content=title
+            Notification(user=user,slug=slug, content =content ,type=0).save()
         return redirect('store:orders')
+
     context = {
         'user':user,
        'cart' :cart,
        'tong' : tong,
     }
+    # Notification
+    
     return render(request, 'store/checkout.html',context)
 
 @login_required
@@ -477,11 +504,12 @@ def add_notifi_like_p(request):
 
 
 @login_required
-def orders(request):
+def orders(request):    
+    user = request.user
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
     order = ['Pending', 'Accepted', 'Packed','On The Way','Delivered','Cancelled']
     order = {key: i for i, key in enumerate(order)}
-    ordered_sections = sorted(all_orders, key=lambda all_orders: order.get(all_orders.status, 0))
+    ordered_sections = sorted(all_orders, key=lambda all_orders: order.get(all_orders.status, 0))   
     return render(request, 'store/orders.html', {'orders': ordered_sections})
 
 @login_required
