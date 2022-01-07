@@ -135,6 +135,7 @@ class ProductReview(models.Model):
 
     def get_review_rating(self):
         return self.review_rating
+        
 class Favorite(models.Model):
     """User favorite products"""
     user = models.ForeignKey(

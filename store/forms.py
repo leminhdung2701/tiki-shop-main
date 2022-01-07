@@ -9,7 +9,7 @@ from django.db.models import fields
 from django.forms import widgets
 from django.forms.fields import CharField
 from django.utils.translation import gettext, gettext_lazy as _
-from . models import Product, Comment,Profile,ProductReview
+from . models import Product, Comment,Profile, ProductReview
 
 
 class RegistrationForm(UserCreationForm):
@@ -74,6 +74,6 @@ class RatingForm(forms.ModelForm):
         'rows': '4',
     }))
     class Meta:
-        model = Productview
+        model = ProductReview
         fields=('review_text','review_rating')
    
