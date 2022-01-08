@@ -312,8 +312,8 @@ def minus_cart(request, cart_id):
 @login_required
 def checkout(request):
     if(not request.GET.get('address')):
-        messages.error(request, "Bạn không có địa chỉ giao hàng!")
-        return redirect('store:cart')
+        # messages.error(request, "Bạn không có địa chỉ giao hàng!")
+        return redirect('store:checkout-test')
     user = request.user
     address_id = request.GET.get('address')
     address = get_object_or_404(Address, id=address_id)
@@ -540,7 +540,19 @@ def shop(request):
 def test(request):
     return render(request, 'store/test.html')
 
-
+@login_required
+def remove_like(request, favorite_id):
+    user = request.user
+    if request.method == 'GET':
+        c = get_object_or_404(Favorite, id=favorite_id)
+        nameproduct = c.product.title
+        product = c.product
+        product.likes -= 1
+        product.user_likes.remove(user)
+        product.save()
+        c.delete()
+        messages.success(request, "Bạn đã bỏ thích sản phẩm "+nameproduct)
+    return redirect('store:like-products')
 class SearchView(ListView):
     model = Product
     template_name = 'store/search.html'

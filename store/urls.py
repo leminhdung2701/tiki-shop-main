@@ -24,7 +24,7 @@ urlpatterns = [
     path('orders/', views.orders, name="orders"),
     path('purchase-orders/', views.purchase_orders, name="purchase-orders"),
     path('like-products/', views.like_products, name="like-products"),
-
+    path('remove-like/<int:favorite_id>/', views.remove_like, name="remove-like"),
     #URL for Products
     path('product/<slug:slug>/', views.detail, name="product-detail"),
     path('categories/', views.all_categories, name="all-categories"),
