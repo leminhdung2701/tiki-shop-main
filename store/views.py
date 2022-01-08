@@ -31,8 +31,10 @@ def home(request):
                 all_products.append(product)
                 i+=1
 
-    # all_products = Product.objects.all()     
-   
+    # all_products = Product.objects.all() 
+    gmail = request.GET.get('gmail', '')    
+    if (gmail):
+        messages.success(request, "Đăng kí nhận thông báo vào gmail thành công!")
     context = {
         'categories': categories,
         'products': products,
@@ -201,7 +203,7 @@ class RegistrationView(View):
     def post(self, request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            messages.success(request, "Congratulations! Registration Successful!")
+            messages.success(request, "Bạn đã đăng ký tài khoản thành công")
             form.save()
         return render(request, 'account/register.html', {'form': form})
         
@@ -239,7 +241,7 @@ class AddressView(View):
             state = form.cleaned_data['state']
             reg = Address(user=user, locality=locality, city=city, state=state)
             reg.save()
-            messages.success(request, "New Address Added Successfully.")
+            messages.success(request, "Bạn đã thêm một địa chỉ mới.")
         return redirect('store:profile')
 
 
@@ -281,7 +283,7 @@ def remove_cart(request, cart_id):
     if request.method == 'GET':
         c = get_object_or_404(Cart, id=cart_id)
         c.delete()
-        messages.success(request, "Product removed from Cart.")
+        messages.success(request, "Sản phẩm đã được xóa trong giỏ hàng")
     return redirect('store:cart')
 
 
@@ -309,6 +311,9 @@ def minus_cart(request, cart_id):
 
 @login_required
 def checkout(request):
+    if(not request.GET.get('address')):
+        messages.error(request, "Bạn không có địa chỉ giao hàng!")
+        return redirect('store:cart')
     user = request.user
     address_id = request.GET.get('address')
     address = get_object_or_404(Address, id=address_id)

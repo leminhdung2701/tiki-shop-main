@@ -2,7 +2,7 @@
 {% load static %}
 
       {% block content %}
-
+      {% include 'partials/_messages.html' %}
       <!-- SLIDER-->
       <div class="container" style="margin-top: 10px;">
         
@@ -25,7 +25,7 @@
           
         </section>
 
-
+       
         <!-- CATEGORIES SECTION-->
         <section class="pt-5">
           <header class="text-center">
@@ -311,9 +311,9 @@
                 <p class="text-small text-muted mb-0">Hãy theo dõi khuyến mãi từ Tiki</p>
               </div>
               <div class="col-lg-6">
-                <form action="#">
+                <form action="" method="get">
                   <div class="input-group flex-column flex-sm-row mb-3">
-                    <input class="form-control form-control-lg py-3" type="email" placeholder="Nhập email của bạn để nhận thông báo" aria-describedby="button-addon2">
+                    <input class="form-control form-control-lg py-3" type="email" placeholder="Nhập email của bạn để nhận thông báo" aria-describedby="button-addon2" name="gmail">
                     <div class="input-group-append">
                       <button class="btn btn-dark btn-block" id="button-addon2" type="submit">Theo dõi</button>
                     </div>
