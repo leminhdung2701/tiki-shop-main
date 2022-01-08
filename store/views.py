@@ -76,19 +76,22 @@ def detail(request, slug):
             c = Comment(product=product,user = user, commenter_name=name, comment_body=body, date_added=datetime.now())
             c.save()          
         elif form1.is_valid():
-    
-            review_text = form1.cleaned_data['review_text']
-            review_rating = form1.cleaned_data['review_rating']
-            if(ProductReview.objects.filter(user=user).exists()):
-                c =  ProductReview.objects.get(user =user,product=product)
-                c.review_text=review_text
-                c.review_rating = review_rating
-                c.save()
+            if(not Order.objects.filter(user=user,product=product).exists()):
+                messages.error(request, "Bạn không được đánh giá vì chưa mua hàng")
+                form1 = RatingForm()
             else:
-                c = ProductReview(user = user,product=product,review_text=review_text,review_rating=review_rating)
-                c.save()
-        avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
-        context['avg']=avg
+                review_text = form1.cleaned_data['review_text']
+                review_rating = form1.cleaned_data['review_rating']
+                if(ProductReview.objects.filter(user=user).exists()):
+                    c =  ProductReview.objects.get(user =user,product=product)
+                    c.review_text=review_text
+                    c.review_rating = review_rating
+                    c.save()
+                else:
+                    c = ProductReview(user = user,product=product,review_text=review_text,review_rating=review_rating)
+                    c.save()
+                avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
+                context['avg']=avg
     else:
         form = CommentForm()    
         form1 = RatingForm()
