@@ -521,6 +521,13 @@ def orders(request):
     return render(request, 'store/orders.html', {'orders': ordered_sections})
 
 @login_required
+def billing(request): 
+    billing = [1, 2]   
+    context = {'billings':billing}
+    return render(request, 'store/billing.html',context)
+
+
+@login_required
 def purchase_orders(request):
     all_orders = Order.objects.filter(user=request.user,status='Delivered').order_by('-ordered_date')
     return render(request, 'store/purchase_orders.html', {'orders': all_orders})

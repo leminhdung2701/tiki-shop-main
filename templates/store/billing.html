@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<div class="container py-5">
+    <div style="font-size: 30px; color: black;margin-bottom: 50px;" class="text-center">Hoá đơn</div>
+    {% for billing in billings %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card mb-4" style="margin-bottom:50px" id="tables">
+                <div style="width: 100%;" class="container card-header">
+                    <div class="row ">
+                        <p style="margin-left: 20px;"> <a href="#"> Đơn hàng</a></p>
+                        <p style="margin-left: 20px;"> Ngày ... </p>
+                    </div>                    
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Qty.</th>
+                                <th>Thời gian đặt</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% if orders %}
+
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td><a
+                                        href="{% url 'store:product-detail' order.product.slug %}">{{order.product.title}}</a>
+                                </td>
+                                <td>
+                                    {% if order.product.product_image %}
+                                    <a href="{% url 'store:product-detail' order.product.slug %}">
+                                        <img src="{{order.product.product_image.url}}"
+                                            alt="{{order.product.product_title}}" style="width:150px;">
+                                    </a>
+                                    {% endif %}
+
+                                </td>
+                                <td>{{order.quantity}}</td>
+                                <td>{{order.ordered_date|naturaltime}}</td>
+                                <td>
+
+                                    {% if order.status == 'Pending' %}
+
+                                    Đang xử lý
+                                    {% endif %}
+
+                                    {% if order.status == 'Accepted' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width:0;"></div>
+                                    </div>
+                                    Đã xác nhận
+                                    {% endif %}
+
+                                    {% if order.status == 'Packed' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width:40%;"></div>
+                                    </div>
+                                    Đã đóng gói
+                                    {% endif %}
+
+
+                                    {% if order.status == 'On The Way' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width:70%;"></div>
+                                    </div>
+                                    Đã vận chuyển
+                                    {% endif %}
+
+                                    {% if order.status == 'Delivered' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width:100%;"></div>
+                                    </div>
+                                    Đã giao hàng
+                                    {% endif %}
+
+                                    {% if order.status == 'Cancelled' %}
+                                    <div class="bg-light border border-danger">
+                                        <div class="p-3 bg-danger" style="width:100%;"></div>
+                                    </div>
+                                    Đã huỷ
+                                    {% endif %}
+
+                                    <!-- {{order.status}} -->
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div style="width: 100%;" class="container card-header">
+                    <div class="row ">
+                        <p style="margin-left: 20px;"> Tổng số tiền: </p>
+                        <p style="margin-left: 20px;"> 500.000 đ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+    
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
