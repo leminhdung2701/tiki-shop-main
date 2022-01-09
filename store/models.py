@@ -110,7 +110,7 @@ class Order(models.Model):
     address = models.ForeignKey(Address, verbose_name="Địa chỉ", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name="Sản phẩm", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name="Số lượng")
-    ordered_date = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian đặt")
+    ordered_date = models.DateTimeField( verbose_name="Thời gian đặt")
     status = models.CharField(
         choices=STATUS_CHOICES,
         verbose_name="Trạng thái",
@@ -153,3 +153,20 @@ class Favorite(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['user', 'product'], name='favorite_once')
         ]
+class Invoice(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    order = models.ManyToManyField(Order)
+    ordered_date = models.DateTimeField(auto_now_add=True,verbose_name="Thời gian đặt")
+    price = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Tổng tiền")
+class Voucher(models.Model):
+    code = models.CharField(verbose_name="Mã giảm giá",max_length=20)                  
+    is_active = models.BooleanField(verbose_name="Còn sử dụng được không",default=True)
+    type = models.IntegerField(verbose_name="Thể loại - 0 là trừ tiền hàng, 1 là freeship")      #0 la tru tien hang, 1 la freeship
+    discount = models.FloatField(verbose_name="Giảm giá - số là trừ tiền,dạng thập phân là giảm %",default=0)   # là một số thì trừ tiền, dạng thập phân 0. thì %
+    def __str__(self):
+        return str(self.code)
+class UserVoucher(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    voucher=models.ForeignKey(Voucher,on_delete=models.CASCADE)
+    count  = models.IntegerField() # 1 voucher 1 user chỉ dùng được 3 lần là max
+    

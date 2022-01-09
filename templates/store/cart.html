@@ -87,7 +87,15 @@
               <div class="bg-light px-4 py-3">
                 <div class="row align-items-center text-center">
                   <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{% url 'store:home' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Tiếp tục mua sắm</a></div>
-                  <div class="col-md-6 text-md-right"><a class="btn btn-link p-0 text-dark btn-sm" href="{% url 'store:checkout-test' %}">Thanh toán<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
+                  <div class="col-md-6 text-md-right">
+                  <form action="{% url 'store:checkout-test' %}" id="myform">
+                          
+                          <input type="hidden" name="total_amount"  value="{{total_amount}}">
+                          <input type="hidden" name="voucher"  value="{{voucher}}">
+                    <button type="submit" class="col-md-6 text-md-right" style="font-size: 12px"type="submit"> <i class="fas fa-dollar-sign mr-2"></i>Thanh toán</button>
+
+                  </form>
+                </div>
                 </div>
               </div>
             </div>
@@ -111,9 +119,9 @@
                     </li> -->
                     <li>
 
-                     <form action="#">
+                     <form action="#" >
                         <div class="form-group mb-0">
-                          <input class="form-control" type="text" placeholder="Nhập mã giảm giá">
+                          <input class="form-control" type="text" placeholder="Nhập mã giảm giá" name="voucher">
                           <button class="btn btn-white btn-sm btn-block" type="submit"> <i class="fas fa-gift mr-2"></i>Sử dụng </button>
                         </div>
                       </form> 
@@ -129,6 +137,8 @@
                     {% if addresses %}
                       {% for address in addresses %}
                         <div class="mb-3">
+                          <input type="hidden" name="total_amount"  value="{{total_amount}}">
+                          <input type="hidden" name="voucher"  value="{{voucher}}">
                         <input type="radio" name="address" style="font-size: 10px;" value="{{address.id}}"> <strong>Địa chỉ {{forloop.counter}}</strong> <br>
                          {{address.locality}}, {{address.city}}, {{address.state}} 
                         </div>

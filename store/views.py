@@ -1,6 +1,6 @@
 import django
 from django.contrib.auth.models import User
-from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile,ProductReview,Favorite
+from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile,ProductReview,Favorite,Invoice,Voucher,UserVoucher
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import RegistrationForm, AddressForm,CommentForm,ProfileForm,RatingForm
 from django.contrib import messages
@@ -259,7 +259,7 @@ def cart(request):
     cart_products = Cart.objects.filter(user=user)
     # Display Total on Cart Page
     amount = decimal.Decimal(0)
-    shipping_amount = decimal.Decimal(10)
+    shipping_amount = 30000
     # using list comprehension to calculate total amount based on quantity and shipping
     cp = [p for p in Cart.objects.all() if p.user==user]
     if cp:
@@ -268,13 +268,51 @@ def cart(request):
             amount += temp_amount
     # Customer Addresses
     addresses = Address.objects.filter(user=user)
+    #kiem tra voucher
+    code = request.GET.get('voucher')
+    print(code)
+    boolean_check = False
     context = {
         'cart_products': cart_products,
         'amount': amount,
         'shipping_amount': shipping_amount,
         'total_amount': amount + shipping_amount,
         'addresses': addresses,
+        
     }
+     #kiem tra voucher
+    if(code):
+        if(Voucher.objects.filter(code=code).exists()): #kiem tra xem voucher có tồn tại không
+            voucher = Voucher.objects.get(code=code)
+            if(voucher.is_active):          # ma giam gia hoạt động -> kiểm tra số lượt user dùng mã giảm giá
+                if(UserVoucher.objects.filter(voucher=voucher,user=user).exists()):
+                    uservoucher =UserVoucher.objects.get(voucher=voucher,user=user)
+                    if(uservoucher.count==3): messages.error(request, "Đã quá lượt sử dụng mã giảm giá này")
+                    else :
+                        uservoucher.count=uservoucher.count+1 
+                        messages.success(request, "Sử dụng mã giảm giá thành công")
+                        boolean_check = True
+                        context['voucher'] = code
+                else:
+                    uservoucher = UserVoucher(voucher=voucher,user=user,count=1)
+                    uservoucher.save()
+                    messages.success(request, "Sử dụng mã giảm giá thành công")
+                    boolean_check= True
+                    
+        else:
+            messages.error(request, "Mã giảm giá sai! Vui lòng kiểm tra lại")
+        if(boolean_check):
+            if(voucher.type == 1): 
+                context['shipping_amount']=0
+                context['total_amount']  = amount
+            elif(float(voucher.discount).is_integer()):
+                context['amount']  = amount - decimal.Decimal(float(voucher.discount))
+                context['total_amount'] = amount - decimal.Decimal(float(voucher.discount)) +shipping_amount
+            else:
+                context['amount']  = amount - amount*decimal.Decimal(float(voucher.discount))
+                context['total_amount'] = amount - amount*decimal.Decimal(float(voucher.discount)) +shipping_amount
+    #kiem tra voucher
+    
     return render(request, 'store/cart.html', context)
 
 
@@ -312,20 +350,31 @@ def minus_cart(request, cart_id):
 @login_required
 def checkout(request):
     if(not request.GET.get('address')):
-        # messages.error(request, "Bạn không có địa chỉ giao hàng!")
-        return redirect('store:checkout-test')
+        messages.error(request, "Bạn không có địa chỉ giao hàng!")
     user = request.user
+    total_amount = request.GET.get('total_amount')
+    code = request.GET.get('voucher')
+    
     address_id = request.GET.get('address')
     address = get_object_or_404(Address, id=address_id)
     content=""  
     title = "Bạn đã đặt hàng thành công " 
     # Get all the products of User in Cart
     cart = Cart.objects.filter(user=user)
+    invoice = Invoice(user=user,price=total_amount)
+    invoice.save()
+    if code !="": 
+            voucher = Voucher.objects.get(code=code)
+            uservoucher =UserVoucher.objects.get(voucher=voucher,user=user)
+            uservoucher.count=uservoucher.count+1
+            uservoucher.save()
     for c in cart:
         title = title + str(c.product.title)+", "
-        Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
+        order = Order(user=user, address=address, product=c.product, quantity=c.quantity,ordered_date=invoice.ordered_date)
+        order.save()
+        invoice.order.add(order)
+        invoice.save()
         c.delete()
-   
     # Notification
     if request.method == 'GET':
         title=title[:-2] 
@@ -344,14 +393,14 @@ def checkout(request):
 def checkout_test(request):
     user = request.user
     cart = Cart.objects.filter(user=user)
-    tong = 0
+    tong = request.GET.get('total_amount')
     locality = request.GET.get('locality', '')
     city = request.GET.get('city', '')
     state = request.GET.get('state', '')
     content=""  
-    title = "Bạn đã đặt hàng thành công " 
-    for c in cart:
-        tong = tong + c.product.price*c.quantity
+    title = "Bạn đã đặt hàng thành công "
+   
+    code = request.GET.get('voucher')
     if(locality and city and state):
         user=request.user
         reg = Address(user=user, locality=locality, city=city, state=state)
@@ -359,9 +408,19 @@ def checkout_test(request):
         user = request.user
         # Get all the products of User in Cart
         cart = Cart.objects.filter(user=user)
+        invoice = Invoice(user=user,price=tong)
+        invoice.save()
+        if code !="": 
+            voucher = Voucher.objects.get(code=code)
+            uservoucher =UserVoucher.objects.get(voucher=voucher,user=user)
+            uservoucher.count=uservoucher.count+1
+            uservoucher.save()
         for c in cart:
             title = title + str(c.product.title)+", "
-            Order(user=user, address=reg, product=c.product, quantity=c.quantity).save()
+            order = Order(user=user, address=reg, product=c.product, quantity=c.quantity,ordered_date=invoice.ordered_date)
+            order.save()
+            invoice.order.add(order)
+            invoice.save()
             c.delete()
         if request.method == 'GET':
             title=title[:-2] 
@@ -380,6 +439,7 @@ def checkout_test(request):
         'user':user,
        'cart' :cart,
        'tong' : tong,
+       
     }
     # Notification
     
@@ -524,7 +584,11 @@ def orders(request):
 def purchase_orders(request):
     all_orders = Order.objects.filter(user=request.user,status='Delivered').order_by('-ordered_date')
     return render(request, 'store/purchase_orders.html', {'orders': all_orders})
-
+@login_required
+def invoice(request): 
+    billing = Invoice.objects.filter(user=request.user).order_by('-ordered_date')
+    context = {'billings':billing}
+    return render(request, 'store/invoice.html',context)
 @login_required
 def like_products(request):
     user = request.user
