@@ -223,8 +223,8 @@
               <ul class="mb-0 list-inline">
                 <li class="list-inline-item m-0 p-0">
                   {% comment %}<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart "></i></a>{% endcomment %}
-                  <form action="{% url 'store:add-notifi-like-p' %}">
-                    <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                  <form action="{% url 'store:add-notifi-like-rp' %}">
+                    <input type="hidden" name="related_prod_id" value="{{rp.id}}" id="product_id">
                     {% if user not in rp.user_likes.all %}
                     <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart " style="color:red"></i></button>
                     {% else %}

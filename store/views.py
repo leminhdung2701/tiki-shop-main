@@ -540,7 +540,6 @@ def add_notifi_like_cp(request):
 
 @login_required
 def add_notifi_like_p(request):
-    print("Hello")
     user = request.user
     product_id = request.GET.get('prod_id')
     product = get_object_or_404(Product, id=product_id)
@@ -569,6 +568,35 @@ def add_notifi_like_p(request):
             product.save()
     return redirect('store:product-detail',product.slug) 
     
+@login_required
+def add_notifi_like_rp(request):
+    user = request.user
+    product_id = request.GET.get('related_prod_id')
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'GET':      
+        content=""  
+        title = "Bạn" +" đã thích sản phẩm " +  product.title 
+        slug=product.slug
+        if len(title)>70:  
+            i=70          
+            while title[i] != " ":
+                i=i-1
+            content=title[:i]+" ..."
+        else:
+            content=title
+        if(Favorite.objects.filter(user=user,product=product)): #tồn tại like rồi
+            Notification.objects.filter(user=user,slug=product.slug,type=1).delete()
+            Favorite.objects.filter(user=user,product=product).delete()
+            product.likes -= 1
+            product.user_likes.remove(user)
+            product.save()
+        else:
+            Notification(user=user,slug=slug, content =content ,type=1).save()
+            Favorite(user=user,product=product).save()
+            product.likes += 1
+            product.user_likes.add(user)
+            product.save()
+    return redirect('store:product-detail',product.slug) 
 
 
 @login_required
