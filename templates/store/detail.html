@@ -201,7 +201,7 @@
 
 
     <!-- RELATED PRODUCTS-->
-    <h2 class="h5 text-uppercase mb-4">Xem gần đây</h2>
+    <h2 class="h5 text-uppercase mb-4">Sẩn phảm tương tự</h2>
     <div class="row">
 
       {% if related_products %}
@@ -225,7 +225,7 @@
                   {% comment %}<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart "></i></a>{% endcomment %}
                   <form action="{% url 'store:add-notifi-like-p' %}">
                     <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
-                    {% if user not in product.user_likes.all %}
+                    {% if user not in rp.user_likes.all %}
                     <button type="submit" class="btn btn-sm btn-outline-dark"><i class="far fa-heart " style="color:red"></i></button>
                     {% else %}
                     <button type="submit" class="btn btn-sm btn-outline-dark"><i class="fas fa-heart " style="color:red"></i></button>
