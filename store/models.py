@@ -169,4 +169,7 @@ class UserVoucher(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     voucher=models.ForeignKey(Voucher,on_delete=models.CASCADE)
     count  = models.IntegerField() # 1 voucher 1 user chỉ dùng được 3 lần là max
-    
+class Lastseen_Product(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Thời gian xem")

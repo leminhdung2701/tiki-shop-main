@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Address, Category, Favorite, Invoice, Notification, Product, Cart, Order,Comment,Profile,ProductReview, UserVoucher, Voucher
+from .models import Address, Category, Favorite, Invoice, Lastseen_Product, Notification, Product, Cart, Order,Comment,Profile,ProductReview, UserVoucher, Voucher
 
 # Register your models here.
 class AddressAdmin(admin.ModelAdmin):
@@ -55,3 +55,4 @@ admin.site.register(Favorite)
 admin.site.register(Voucher)
 admin.site.register(UserVoucher)
 admin.site.register(Invoice)
+admin.site.register(Lastseen_Product)

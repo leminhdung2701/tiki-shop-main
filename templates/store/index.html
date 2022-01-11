@@ -104,7 +104,7 @@
                       </div>
                     </div>
                     <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
-                    <p class="small text-muted">{{product.price}} đ</p>
+                    <p class="small text-muted">{{product.price|floatformat:0}} đ</p>
                   </div>
                 </div>
 
@@ -121,8 +121,8 @@
           </header>
           <div class="row">
         
-            {% if products_popular %}
-            {% for product in products_popular %}
+            {% if lastseen_products %}
+            {% for product in lastseen_products %}
         
             <!-- PRODUCT-->
             <div class="col-xl-3 col-lg-4 col-sm-6">
@@ -169,7 +169,7 @@
                   </div>
                 </div>
                 <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
-                <p class="small text-muted">{{product.price}} đ</p>
+                <p class="small text-muted">{{product.price|floatformat:0}} đ</p>
               </div>
             </div>
         
@@ -232,7 +232,7 @@
                       </div>
                     </div>
                     <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
-                    <p class="small text-muted">{{product.price}} đ</p>
+                    <p class="small text-muted">{{product.price|floatformat:0}} đ</p>
                   </div>
                 </div>
 
@@ -306,7 +306,7 @@
                           </div>
                         </div>
                         <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
-                        <p class="small text-muted">{{product.price}} đ</p>
+                        <p class="small text-muted">{{product.price|floatformat:0}} đ</p>
                       </div>
                     </div>
                   {% endif %}

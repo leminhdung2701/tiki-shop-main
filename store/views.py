@@ -1,6 +1,6 @@
 import django
 from django.contrib.auth.models import User
-from store.models import Address, Cart, Category, Notification, Order, Product,Comment,Profile,ProductReview,Favorite,Invoice,Voucher,UserVoucher
+from store.models import Address, Cart, Category, Lastseen_Product, Notification, Order, Product,Comment,Profile,ProductReview,Favorite,Invoice,Voucher,UserVoucher
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import RegistrationForm, AddressForm,CommentForm,ProfileForm,RatingForm
 from django.contrib import messages
@@ -22,8 +22,7 @@ def home(request):
     all_categories = Category.objects.all()
     all_product = Product.objects.all() 
     all_products = []
-    count_item_show = 8 
-   
+    count_item_show = 8
     for category in all_categories:
         i = 0
         for product in all_product:
@@ -42,7 +41,12 @@ def home(request):
         'all_categories': all_categories,
         'all_products': all_products,
     }
-
+    if request.user.is_authenticated:
+        lastseen= Lastseen_Product.objects.filter(user=request.user).order_by('-created_at')[:4]
+        lastseen_products = []
+        for i in lastseen:
+            lastseen_products.append(i.product)
+        context['lastseen_products'] = lastseen_products
     return render(request, 'store/index.html', context)
 
 
@@ -57,6 +61,14 @@ def detail(request, slug):
     avg = ProductReview.objects.filter(product=product).aggregate(Avg('review_rating'))
     count_buy = Order.objects.filter(product = product,status='Delivered').count()
     checklike = None
+    # them lastseen_product
+    if request.user.is_authenticated:
+        if(Lastseen_Product.objects.filter(user=user,product=product).exists()):
+            Lastseen_Product.objects.get(user=user,product=product).delete()
+            Lastseen_Product(user=user,product=product).save()
+        else:
+            Lastseen_Product(user=user,product=product).save()
+    # them lastseen_product
     if request.user.is_authenticated:
         checklike = Favorite.objects.filter(user=user,product=product)
     context = {

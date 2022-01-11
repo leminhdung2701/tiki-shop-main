@@ -153,7 +153,7 @@
                   </div>
                   <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{product.title}}</a>
                   </h6>
-                  <p class="small text-muted">{{product.price}} đ</p>
+                  <p class="small text-muted">{{product.price|floatformat:0}} đ</p>
                 </div>
               </div>
             {% endfor %}
