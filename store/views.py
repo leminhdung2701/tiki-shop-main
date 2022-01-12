@@ -64,10 +64,8 @@ def detail(request, slug):
     # them lastseen_product
     if request.user.is_authenticated:
         if(Lastseen_Product.objects.filter(user=user,product=product).exists()):
-            Lastseen_Product.objects.get(user=user,product=product).delete()
-            Lastseen_Product(user=user,product=product).save()
-        else:
-            Lastseen_Product(user=user,product=product).save()
+            Lastseen_Product.objects.get(user=user,product=product).delete()        
+        Lastseen_Product(user=user,product=product).save()
     # them lastseen_product
     if request.user.is_authenticated:
         checklike = Favorite.objects.filter(user=user,product=product)
@@ -80,7 +78,6 @@ def detail(request, slug):
         'checklike':checklike,
         'count':count_buy,
     }
-    # avg= product.productReview_set.aggregate(Avg('review_rating')).values()[0]
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=product)
         form1 = RatingForm(request.POST, instance=product)
@@ -271,7 +268,7 @@ def cart(request):
     cart_products = Cart.objects.filter(user=user)
     # Display Total on Cart Page
     amount = decimal.Decimal(0)
-    shipping_amount = 30000
+    shipping_amount = 35000
     # using list comprehension to calculate total amount based on quantity and shipping
     cp = [p for p in Cart.objects.all() if p.user==user]
     if cp:
@@ -309,21 +306,25 @@ def cart(request):
                     uservoucher = UserVoucher(voucher=voucher,user=user,count=1)
                     uservoucher.save()
                     messages.success(request, "Sử dụng mã giảm giá thành công")
-                    boolean_check= True
-                    
+                    boolean_check= True                    
         else:
             messages.error(request, "Mã giảm giá sai! Vui lòng kiểm tra lại")
+
         if(boolean_check):
-            if(voucher.type == 1): 
-                context['shipping_amount']=0
+            if(voucher.type == 1):
+                if voucher.code=="TIKIXINCHAO":
+                    context['shipping_amount']= 5000
+                else:
+                    context['shipping_amount']= 0
                 context['total_amount']  = amount
-            elif(float(voucher.discount).is_integer()):
-                context['amount']  = amount - decimal.Decimal(float(voucher.discount))
-                context['total_amount'] = amount - decimal.Decimal(float(voucher.discount)) +shipping_amount
             else:
-                context['amount']  = amount - amount*decimal.Decimal(float(voucher.discount))
-                context['total_amount'] = amount - amount*decimal.Decimal(float(voucher.discount)) +shipping_amount
-    #kiem tra voucher
+                if voucher.code=="TIKILAMQUEN":
+                    amount = amount - decimal.Decimal(float(voucher.discount))                 
+                else:                    
+                    amount = amount - decimal.Decimal(float(amount)* voucher.discount )
+                context['amount']  = amount
+                context['total_amount'] = amount +shipping_amount             
+
     
     return render(request, 'store/cart.html', context)
 
