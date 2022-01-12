@@ -93,7 +93,7 @@ def detail(request, slug):
             else:
                 review_text = form1.cleaned_data['review_text']
                 review_rating = form1.cleaned_data['review_rating']
-                if(ProductReview.objects.filter(user=user).exists()):
+                if(ProductReview.objects.filter(user=user,product=product).exists()):
                     c =  ProductReview.objects.get(user =user,product=product)
                     c.review_text=review_text
                     c.review_rating = review_rating
