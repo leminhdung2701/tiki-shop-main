@@ -21,7 +21,8 @@ Web bán hàng online
    git clone https://github.com/leminhdung2701/tiki-shop-main
    ```
 2. Chạy chương trình 
-    Window
+   
+   Window
    ```
    python manage.py runserver
    ```
