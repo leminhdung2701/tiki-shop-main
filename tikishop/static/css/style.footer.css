@@ -33,10 +33,10 @@
 .dot-container{
     position: absolute;
     height: 30px;
-    width: 77% ;
+    width: 70% ;
     display: flex;
-    align-items: center;
     text-align: center;
+    align-items: center;
     justify-content: center;
 }
 
