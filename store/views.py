@@ -114,6 +114,10 @@ def all_categories(request):
     categories = Category.objects.filter(is_active=True)
     return render(request, 'store/categories.html', {'categories':categories})
 
+def introduce(request):
+    return render(request, 'store/introduce.html')
+
+
 def price__range(min_price,max_price):
     
     product=Product.objects.price < max_price and Product.objects.price > min_price

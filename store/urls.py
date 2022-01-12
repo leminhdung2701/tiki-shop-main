@@ -19,6 +19,7 @@ urlpatterns = [
     path('add-notifi-like-cp/', views.add_notifi_like_cp, name="add-notifi-like-cp"),
     path('add-notifi-like-p/', views.add_notifi_like_p, name="add-notifi-like-p"),
     path('add-notifi-like-rp/', views.add_notifi_like_rp, name="add-notifi-like-rp"),
+    path('introduce/', views.introduce, name="introduce"),
     path('cart/', views.cart, name="cart"),
     path('checkout/', views.checkout, name="checkout"),
     path('checkout-test/', views.checkout_test, name="checkout-test"),
