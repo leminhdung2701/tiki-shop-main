@@ -143,13 +143,17 @@
                          {{address.locality}}, {{address.city}}, {{address.state}} 
                         </div>
                       {% endfor %}
+                      
+                      {%if addresses|length > 0 %}
+                        <button type="submit" class="btn btn-dark btn-lg btn-outline-dark" style="font-size: 12px"type="submit"> <i class="fas fa-dollar-sign mr-2"></i>Thanh toán khi giao hàng</button>
+                      
+                      {% endif %}
                     {% endif %}
 
                     <!-- Set up a container element for the button -->
                     <div class="text-end" id="paypal-button-container"></div>
 
                     {% comment %} For Cash on Delivery {% endcomment %}
-                    <button type="submit" class="btn btn-dark btn-lg btn-outline-dark" style="font-size: 12px"type="submit"> <i class="fas fa-dollar-sign mr-2"></i>Thanh toán khi giao hàng</button>
 
                   </form>
 

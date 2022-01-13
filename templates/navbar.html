@@ -57,6 +57,9 @@
               <a class="dropdown-item border-0 transition-link" href="#">Thông báo</a>
               <hr>
                 {% if notification_list %}
+                  {% if notification_list|length == 0 %}
+                    <p class="dropdown-item border-0 transition-link" style="font-size: 10px;">Bạn chưa có thông báo.</p>                  
+                  {% endif %}
                   {% for notification in notification_list %}   
                       {% if notification.type == 1%}                
                       <a class="dropdown-item border-0 transition-link" style="font-size: 10px;"  href="{% url 'store:product-detail' notification.slug %}"> 
@@ -72,6 +75,7 @@
                         {{notification.date_added|naturaltime}}</p>
                       {% endif %}
                   {% endfor %}
+               
                 {% endif %}
             </li>
 

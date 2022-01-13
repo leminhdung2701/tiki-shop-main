@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>{% block metatitle %}Tiki{% endblock metatitle %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/intro.css' %}">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
@@ -12,36 +13,35 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'img/logo-tiki.png' %}">
 </head>
 
-<body>
-    <div class='container mx-auto mt-5 col-md-10 mt-100'>
+<body >
+    <div class="contain mx-auto mt-5 col-md-10 mt-100">  
+        <img style='height: 550px; width: 1240px' src="{% static 'img/poster.png' %}">
+    </div>
+    <div style="background: #1a94ff; align-items: center;margin:auto" class=' container mx-auto mt-1 col-md-10 mt-100'>
+        <div style="color:white" class="title">Tiki</div>
+        <div class=" " style="padding-bottom: 30px;padding-top: 30px;max-width: 650px;text-align: center;align-items: center;margin:auto">
+            <p ><small  class="text-white">Website bán hàng trực tuyến hay website thương mại điện tử được hiểu là trang thông tin
+                điện tử được thiết lập để phục vụ một phần hoặc toàn bộ quy trình của hoạt động mua bán hàng hóa hay cung ứng
+                dịch vụ, từ trưng bày giới thiệu hàng hóa, dịch vụ đến giao kết hợp đồng, cung ứng dịch vụ, thanh toán và dịch
+                vụ sau bán hàng.</p>
+        </div>       
+
+    </div>
+    <div style="background: #1a94ff; " class='container mx-auto mt-5 col-md-10 mt-100'>
         <div class="header">
-            <div class="title">Our Expert Team</div>
-            <p><small class="text-muted">Lorem Ipsum dolor samet</p>
+            <div style="color:white" class="title">Tiki Team</div>
+            <p style="color:white; font-size: 20px;" class=""><small class="">Đội ngũ phát triển giàu kinh nghiệm!</p>
         </div>
         <div class="row justify-content-center pb-5">
-            <div class="card col-md-3 mt-100">
+            <div  class="card col-md-3 mt-100">
                 <div class="card-content">
                     <div class="card-body p-0">
                         <div class="profile"> <img
-                                src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583336/AAA/4.jpg"> </div>
-                        <div class="card-title "> Angelina Frederic<br /> <small>Head of marketing at K mart</small>
+                                src="{% static 'img/TD_.png' %}"> </div>
+                        <div style="color:#1a94ff;font-size: 16px;" class="card-title "> Tăng Thế Duy<br /> <small>Developer</small>
                         </div>
                         <div class="card-subtitle">
-                            <p> <small class="text-muted"> I expected anything less than perfect for the team of experts.
-                                    They are the best team ever! </small> </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card col-md-3 mt-100">
-                <div class="card-content">
-                    <div class="card-body ">
-                        <div class="profile"> <img
-                                src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583319/AAA/3.jpg"> </div>
-                        <div class="card-title "> Noel Flantier<br /> <small>CEO of Redbull</small> </div>
-                        <div class="card-subtitle">
-                            <p> <small class="text-muted"> I really enjoyed working with them, they are Group of
-                                    Professionals and they know what they're Doing </small> </p>
+                            <p  style="color:#1a94ff;font-size: 20px;" > <small class=""> Đã có thành thạo nhiều ngôn ngữ lập trình: python, java, c++,... và 2 năm kinh nghiệm trong nghề. </small> </p>
                         </div>
                     </div>
                 </div>
@@ -50,17 +50,30 @@
                 <div class="card-content">
                     <div class="card-body p-0">
                         <div class="profile"> <img
-                                src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg"> </div>
-                        <div class="card-title "> David Gregory<br /> <small>Resident Dj at ibdc</small> </div>
+                                src="{% static 'img/MD_.png' %}"> </div>
+                        <div style="color:#1a94ff;font-size: 16px;" class="card-title "> Lê Minh Dũng<br /> <small>Manager</small> </div>
                         <div class="card-subtitle">
-                            <p> <small class="text-muted"> I always wanted cool videos of my concerts never knew whom to
-                                    talk to but they are amazing! </small> </p>
+                            <p  style="color:#1a94ff; font-size: 20px;" > <small class=""> Người ham học hỏi, sáng tạo và có kinh nghiệm trong các dự án.</small> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-md-3 mt-100">
+                <div class="card-content">
+                    <div class="card-body p-0">
+                        <div class="profile"> <img
+                                src="{% static 'img/KD_.png' %}"> </div>
+                        <div style="color:#1a94ff;font-size: 16px;" class="card-title "> Trần Khánh Duy<br /> <small>Designer</small> </div>
+                        <div class="card-subtitle">
+                            <p  style="color:#1a94ff;font-size: 20px;" > <small class=""> Là nhà thiết kế bán chuyên, với nhiều thiết kế gây ấn tượng mạnh với các bạn trẻ bây giờ. </small> </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    
 </body>
 
 </html>

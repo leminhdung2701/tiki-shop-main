@@ -1,6 +1,6 @@
 body {
     /* background: linear-gradient(90deg, #145889 0%, #AB47BC 100%) */
-    background: #1a94ff
+    background: #1a94ff;
 }
 
 .container {
@@ -11,8 +11,13 @@ body {
     margin-bottom: 50px
 }
 
+.contain {
+    text-align: center;
+    margin-bottom: 50px
+}
+
 .title {
-    font-size: 25px;
+    font-size: 35px;
     font-weight: 100
 }
 
@@ -32,6 +37,7 @@ body {
 }
 
 .card {
+    
     border-radius: 15px;
     margin-left: 30px;
     margin-right: 30px;
@@ -49,6 +55,13 @@ body {
     background-color: #AB47BC;
     border: none;
     color: #fff
+}
+
+.text-p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .btn:hover {
