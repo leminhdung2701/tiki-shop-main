@@ -1,10 +1,20 @@
 
 # Đề tài nhóm
 Web bán hàng online
-### Ngôn ngữ lập trình
+## Ngôn ngữ lập trình
 * [Django - Python](https://https://www.djangoproject.com//)
 * HTML/CSS
 * Javascript
+## Ảnh xem trước của web
+Dưới đây là một số ảnh demo của trang web bán hàng này
+* Ảnh danh mục
+![ảnh danh mục](https://user-images.githubusercontent.com/58498756/149348475-d8eccdb4-fcb5-4d3c-a0e1-73b4ff63ac3f.png)
+* Ảnh giỏ hàng
+![ảnh giỏ hàng](https://user-images.githubusercontent.com/58498756/149348488-8c5815aa-8a04-4b00-8d1b-f1e2f578d600.png)
+* Ảnh index
+![ảnh index](https://user-images.githubusercontent.com/58498756/149348497-e51317d7-7432-4ea3-81fd-1267b2ca5f40.png)
+* Ảnh sản phẩm
+![ảnh sản phẩm](https://user-images.githubusercontent.com/58498756/149348942-9237d7ae-8d63-45aa-8d5c-f286544e0c36.png)
 ## Cách cài đặt và chạy web
 ### Các phần mềm cần cài trước trong máy
 * django
@@ -38,7 +48,14 @@ Web bán hàng online
 ## Thành viên
 
 * Lê Minh Dũng - Nhóm trưởng - email@email_client.com
-* Tăng Thế Duy -  email@email_client.com
+* Tăng Thế Duy -  tangtheduy@gmail.com
 * Trần Khánh Duy -  email@email_client.com
 Project Link: [https://github.com/leminhdung2701/tiki-shop-main](https://github.com/leminhdung2701/tiki-shop-main)
 
+## Chức năng của trang web
+* Người dùng có thể mua sản phẩm 
+## Database của trang web
+![ảnh database](https://user-images.githubusercontent.com/58498756/149351835-6906e74b-2856-42c7-af7b-8ba6bbb42f64.png)
+Database của web được thiết kế sơ bộ ở trên [dbdiagram](https://dbdiagram.io/d/61caa6953205b45b73cee09a?fbclid=IwAR17drJ4rWI4cF2o2M7DT3S65VObEHCKuJMrTvHMOovEfuaPjqIym1W5hxg)
+
+Về các model của web thì mọi người có thể đọc ở file [store/models.py](store/models.py)
