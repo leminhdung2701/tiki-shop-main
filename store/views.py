@@ -1,8 +1,9 @@
+from multiprocessing import context
 import django
 from django.contrib.auth.models import User
 from store.models import Address, Cart, Category, Lastseen_Product, Notification, Order, Product,Comment,Profile,ProductReview,Favorite,Invoice,Voucher,UserVoucher
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import RegistrationForm, AddressForm,CommentForm,ProfileForm,RatingForm
+from .forms import LoginForm, RegistrationForm, AddressForm,CommentForm,ProfileForm,RatingForm
 from django.contrib import messages
 from django.views import View
 import decimal
@@ -215,10 +216,16 @@ class RegistrationView(View):
     
     def post(self, request):
         form = RegistrationForm(request.POST)
+        authentication_form= LoginForm()
+        
         if form.is_valid():
             messages.success(request, "Bạn đã đăng ký tài khoản thành công")
+            authentication_form.fields["username"].initial = form.cleaned_data['username']
             form.save()
-        return render(request, 'account/register.html', {'form': form})
+        context={
+            'form':authentication_form
+        }
+        return render(request, 'account/login.html', context)
         
 
 @login_required
