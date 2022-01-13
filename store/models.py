@@ -8,8 +8,8 @@ from django.conf import settings
 class Address(models.Model):
     user = models.ForeignKey(User, verbose_name="Tên người dùng", on_delete=models.CASCADE)
     locality = models.CharField(max_length=150, verbose_name="Địa chỉ cụ thể")
-    city = models.CharField(max_length=150, verbose_name="Huyện/Thành phố")
-    state = models.CharField(max_length=150, verbose_name="Tỉnh")
+    city = models.CharField(max_length=150, verbose_name="Quận/Huyện")
+    state = models.CharField(max_length=150, verbose_name="Thành Phố/Tỉnh")
 
     def __str__(self):
         return self.locality
