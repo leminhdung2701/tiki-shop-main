@@ -59,7 +59,18 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
 Project Link: [https://github.com/leminhdung2701/tiki-shop-main](https://github.com/leminhdung2701/tiki-shop-main)
 
 ## Chức năng của trang web
-* Người dùng có thể mua sản phẩm 
+### Người dùng
+* Đăng kí tài khoản, đổi mật khẩu dễ dàng
+* Người dùng có thể xem sản phẩm, mua sản phẩm
+* Lưu hóa đơn mua hàng, sản phẩm từng mua
+* Đánh giá sản phẩm
+* Sửa đổi thông tin của người dùng
+* Lưu sản phẩm được xem gần đây
+* Tìm kiếm sản phẩm theo tên hoặc danh mục
+### Sản phẩm
+* Lưu thông tin cơ bản sản phẩm
+* Thống kê lượt xem sản phẩm
+* Thống kê đánh giá sản phẩm
 ## Database của trang web
 ![ảnh database](https://user-images.githubusercontent.com/58498756/149351835-6906e74b-2856-42c7-af7b-8ba6bbb42f64.png)
 Database của web được thiết kế sơ bộ ở trên [dbdiagram](https://dbdiagram.io/d/61caa6953205b45b73cee09a?fbclid=IwAR17drJ4rWI4cF2o2M7DT3S65VObEHCKuJMrTvHMOovEfuaPjqIym1W5hxg)
