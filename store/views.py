@@ -461,11 +461,11 @@ def checkout_test(request):
             else:
                 content=title
             Notification(user=user,slug=slug, content =content ,type=0).save()
-        return redirect('store:orders')
+            return redirect('store:orders')
     context = {
-        'user':user,
-       'cart' :cart,
-       'tong' : tong,
+        'user' : user,
+        'cart' : cart,
+        'tong' : tong,
     }
     # Notification
     return render(request, 'store/checkout.html',context)
