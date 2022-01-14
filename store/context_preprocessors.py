@@ -20,9 +20,12 @@ def notification_list(request):
             res=reversed(list(notification))
         context = {
             'notification_list': res,
+            'length': 1,
         }         
     else:
-        context = {}
+        context = {
+            'length': 0
+        }
     
     return context
 

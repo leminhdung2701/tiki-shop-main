@@ -462,6 +462,8 @@ def checkout_test(request):
                 content=title
             Notification(user=user,slug=slug, content =content ,type=0).save()
             return redirect('store:orders')
+        else:
+            messages.error(request, "Địa chỉ của bạn đang để trống!")
     context = {
         'user' : user,
         'cart' : cart,
