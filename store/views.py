@@ -217,14 +217,11 @@ class RegistrationView(View):
     
     def post(self, request):
         form = RegistrationForm(request.POST)
-        
         if form.is_valid():
             messages.success(request, "Bạn đã đăng ký tài khoản thành công")
-            
             form.save()
-       
-        return redirect('store:login')
-        
+            return redirect('store:login')
+        return render(request, 'account/register.html', {'form': form})
 
 @login_required
 def profile(request):
