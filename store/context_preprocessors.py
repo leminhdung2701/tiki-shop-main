@@ -1,3 +1,4 @@
+from operator import le
 from .models import Category, Cart, Notification
 
 
@@ -13,18 +14,20 @@ def notification_list(request):
     if request.user.is_authenticated:
         user = request.user
         notification = Notification.objects.filter(user=user)
+        t=1
+        if len(notification)==0: t=0
         if len(notification)>=6:
             result = reversed(list(notification[len(notification)-6:len(notification)]))
             res = result
         else:
             res=reversed(list(notification))
+        
         context = {
-            'notification_list': res,
-            'length': 1,
+            'notification_list': res, 
+            'length' :t,         
         }         
     else:
-        context = {
-            'length': 0
+        context = {            
         }
     
     return context
