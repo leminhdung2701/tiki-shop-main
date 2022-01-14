@@ -15,7 +15,15 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
 ![ảnh index](https://user-images.githubusercontent.com/58498756/149348497-e51317d7-7432-4ea3-81fd-1267b2ca5f40.png)
 * Ảnh sản phẩm
 ![ảnh sản phẩm](https://user-images.githubusercontent.com/58498756/149348942-9237d7ae-8d63-45aa-8d5c-f286544e0c36.png)
-## Cách cài đặt và chạy web
+## Các chức năng chính
+* Xem sản phẩm theo độ phổ biến, danh mục, xem gần đây
+* Hiện chi tiết các thông số SP
+* Thêm SP vào giỏ và đặt SP
+* Thông báo like SP và đặt hàng, thêm hàng
+* Nhận xét và Đánh giá SP
+* Lọc SP theo giá và sắp xếp theo độ phổ biến, giá từ thấp đến cao và ngược lại
+* Tìm kiếm sản phẩm theo tên và danh mục
+* Hiển thị sản phẩm ưu thích, đơn hàng, hoá đơn và đơn đã mua.
 ### Các phần mềm cần cài trước trong máy
 * django
   ```sh
@@ -47,7 +55,7 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
 
 ## Thành viên
 
-* Lê Minh Dũng - Nhóm trưởng - email@email_client.com
+* Lê Minh Dũng - Nhóm trưởng - leminhdung_t64@hus.edu.vn
 * Tăng Thế Duy -  tangtheduy@gmail.com
 * Trần Khánh Duy -  email@email_client.com
 Project Link: [https://github.com/leminhdung2701/tiki-shop-main](https://github.com/leminhdung2701/tiki-shop-main)
