@@ -1,4 +1,5 @@
 from multiprocessing import context
+import string
 import django
 from django.contrib.auth.models import User
 from store.models import Address, Cart, Category, Lastseen_Product, Notification, Order, Product,Comment,Profile,ProductReview,Favorite,Invoice,Voucher,UserVoucher
@@ -325,9 +326,11 @@ def cart(request):
             if(voucher.type == 1):
                 if voucher.code=="TIKIXINCHAO":
                     context['shipping_amount']= 5000
+                    shipping_amount = 5000
                 else:
                     context['shipping_amount']= 0
-                context['total_amount']  = amount
+                    shipping_amount = 0 
+                context['total_amount']  = amount +shipping_amount 
             else:
                 if voucher.code=="TIKILAMQUEN":
                     amount = amount - decimal.Decimal(float(voucher.discount))                 
@@ -418,35 +421,36 @@ def checkout_test(request):
     user = request.user
     cart = Cart.objects.filter(user=user)
     tong = request.GET.get('total_amount')
-    locality = request.GET.get('locality', '')
-    city = request.GET.get('city', '')
-    state = request.GET.get('state', '')
     content=""  
     title = "Bạn đã đặt hàng thành công "
-   
     code = request.GET.get('voucher')
-    if(locality and city and state):
-        user=request.user
-        reg = Address(user=user, locality=locality, city=city, state=state)
-        reg.save()
-        user = request.user
-        # Get all the products of User in Cart
-        cart = Cart.objects.filter(user=user)
-        invoice = Invoice(user=user,price=tong)
-        invoice.save()
-        if code !="": 
-            voucher = Voucher.objects.get(code=code)
-            uservoucher =UserVoucher.objects.get(voucher=voucher,user=user)
-            uservoucher.count=uservoucher.count+1
-            uservoucher.save()
-        for c in cart:
-            title = title + str(c.product.title)+", "
-            order = Order(user=user, address=reg, product=c.product, quantity=c.quantity,ordered_date=invoice.ordered_date)
-            order.save()
-            invoice.order.add(order)
+    print(tong)
+    print(type(tong))
+    price = decimal.Decimal(float(tong))   
+    invoice = Invoice(user=user,price=price )
+    if request.method == 'POST':
+        locality = request.POST.get('locality', '')
+        city = request.POST.get('city', '')
+        state = request.POST.get('state', '')
+        if(locality and city and state):
+            reg = Address(user=user, locality=locality, city=city, state=state)
+            reg.save()
+            user = request.user
+            # Get all the products of User in Cart
+            cart = Cart.objects.filter(user=user)
             invoice.save()
-            c.delete()
-        if request.method == 'GET':
+            if code !="": 
+                voucher = Voucher.objects.get(code=code)
+                uservoucher =UserVoucher.objects.get(voucher=voucher,user=user)
+                uservoucher.count=uservoucher.count+1
+                uservoucher.save()
+            for c in cart:
+                title = title + str(c.product.title)+", "
+                order = Order(user=user, address=reg, product=c.product, quantity=c.quantity,ordered_date=invoice.ordered_date)
+                order.save()
+                invoice.order.add(order)
+                invoice.save()
+                c.delete()
             title=title[:-2] 
             slug = ""
             if len(title)>70:  
@@ -458,15 +462,12 @@ def checkout_test(request):
                 content=title
             Notification(user=user,slug=slug, content =content ,type=0).save()
         return redirect('store:orders')
-
     context = {
         'user':user,
        'cart' :cart,
        'tong' : tong,
-       
     }
     # Notification
-    
     return render(request, 'store/checkout.html',context)
 
 @login_required
