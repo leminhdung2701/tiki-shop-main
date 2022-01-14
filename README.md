@@ -41,8 +41,14 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
    python3 manage.py runserver
    ```
 3. Tạo tài khoản admin để truy cập site của admin
+
+     Window
      ```
-   .\manage.py createsuperuser
+   python manage.py createsuperuser
+   ```
+   Linux
+     ```
+   python3 manage.py createsuperuser
    ```
 
 ## Thành viên
