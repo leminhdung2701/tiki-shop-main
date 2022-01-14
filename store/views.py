@@ -18,6 +18,7 @@ from django.core.paginator import EmptyPage, Paginator
 from django.db.models import Q
 
 def home(request):
+    user = request.user
     categories = Category.objects.filter(is_active=True, is_featured=True).order_by('-count')[:4]
     products = Product.objects.filter(is_active=True, is_featured=True)[:8]
     products_popular = Product.objects.all().order_by('-count')[:8]
