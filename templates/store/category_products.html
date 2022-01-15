@@ -94,9 +94,9 @@
                 <li class="list-inline-item">                                    
                       <select class="selectpicker ml-auto" name="sorting" data-width="200"
                         data-style="bs-select-form-control" data-title="Phân loại">
-                        <option value="popularity" name="sorting">Phổ biến</option>
-                        <option value="low-high" name="sorting">Giá: Từ thấp đến cao</option>
-                        <option value="high-low" name="sorting">Giá: Từ cao đến thấp</option>
+                        <option value="popularity" name="sorting" {% if sorting == 'popularity' %} selected {% endif %}>Phổ biến</option>
+                        <option value="low-high" name="sorting"{% if sorting == 'low-high' %} selected {% endif %}>Giá: Từ thấp đến cao</option>
+                        <option value="high-low" name="sorting"{% if sorting == 'high-low' %} selected {% endif %}>Giá: Từ cao đến thấp</option>
                       </select>                    
                 </li>
                 <li class="list-inline-item">
