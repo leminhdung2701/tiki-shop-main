@@ -55,6 +55,7 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
 * Lê Minh Dũng - Nhóm trưởng - leminhdung_t64@hus.edu.vn
 * Tăng Thế Duy -  tangtheduy_t64@hus.edu.vn
 * Trần Khánh Duy -  trankhanhduy_t64@hus.edu.vn
+
 Project Link: [https://github.com/leminhdung2701/tiki-shop-main](https://github.com/leminhdung2701/tiki-shop-main)
 
 ## Chức năng của trang web
