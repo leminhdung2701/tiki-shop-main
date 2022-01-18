@@ -24,7 +24,7 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
     ```sh
   pip install django-annoying
     ```
-### Cách sử dụng
+### Cách cài đặt
 1. Clone từ git hub theo đường link
    ```
    git clone https://github.com/leminhdung2701/tiki-shop-main
@@ -48,6 +48,16 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
    Linux
      ```
    python3 manage.py createsuperuser
+   ```
+4. Truy cập trang web
+
+    Đường dẫn để sử dụng với user
+     ```
+    http://127.0.0.1:8000/
+    ```
+    Đường dẫn vào site admin để quản lý dữ liệu (dùng tài khoản admin để đăng nhập)
+     ```
+   http://127.0.0.1:8000/admin
    ```
 
 ## Thành viên
