@@ -24,6 +24,11 @@ Dưới đây là một số ảnh demo của trang web bán hàng này
     ```sh
   pip install django-annoying
     ```
+* pillow
+
+  ```sh
+  pip install pillow
+  ```
 ### Cách cài đặt
 1. Clone từ git hub theo đường link
    ```
