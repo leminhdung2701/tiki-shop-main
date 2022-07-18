@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from annoying.fields import AutoOneToOneField
-from django.db.models import Avg
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
+
 # Create your models here.
 class Address(models.Model):
     user = models.ForeignKey(User, verbose_name="Tên người dùng", on_delete=models.CASCADE)
